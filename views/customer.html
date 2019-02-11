@@ -3,30 +3,50 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DELIVERY CUSTOMER</title>
+  <title>The Handy Penguin</title>
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <link rel="stylesheet" href="/esri-leaflet-geocoder/esri-leaflet-geocoder.css">
-  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/customer.css">
   <script src="/vue/vue.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/leaflet/leaflet.js"></script>
   <script src="/esri-leaflet/esri-leaflet.js"></script> 
-  <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script> 
+  <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
   <script src="js/customer.js" defer></script>
+  
 </head>
 <body>
   <a href="/" target="_blank">Open another customer view</a> | 
   <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
   <a href="/driver" target="_blank">Open driver view</a>
-  <h1>
-    DELIVERY CUSTOMER 
-  </h1>
+
+  <section id = "header">
+  <div id = "headerBackground"></div>
+  <h1 id = "title">The Handy Penguin</h1>
+  </section>
+
+  <section id = "logo">
+    <img id = "steffe" src = "img/SteffePosterBoy.png" width = "200">
+    <p id = "slogan" >This ain't a bluff,<br> we'll bring your stuff!</p>
+  </section>
+
+  <section id = "placeOrder">
+    <hr>
+    <h1 align = "center">Order a delivery!</h1>
+  </section>
+
+  <section align = "center">
+    <button id = "orderButton"><p>Order!</p></button>
+  </section>
+  
+  <!--
   <p>Select pickup location first, then your parcel's destination</p>
   <div id="page">
     <div id="my-map"></div><br>
     <input type="checkbox" v-model="express" @change="moveMarker" name="express" value="express">Check this box for express delivery!</input><br><br>
     <button v-on:click="placeOrder">ORDER DELIVERY</button>
     Your order number is {{ orderId }}
-  </div>
+  </div>-->
+
 </body>
 </html>
