@@ -40,7 +40,14 @@ app.get('/dispatcher', function (req, res) {
 // prepare for multiple instances of data if necessary
 function Data() {
   this.orders = {};
-  this.drivers = {};
+  this.drivers = {
+	"Stefan":  {
+		"driverId": "Stefan",
+		"latLong": {
+			"lat": 100, "lng": 100
+		}
+	}
+  };
   this.baseLatLong = { "lat": 59.84091407485801, "lng": 17.64924108548685 };
   this.currentOrderNumber = 1000;
 }
