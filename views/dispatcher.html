@@ -18,18 +18,13 @@
 		<h1><a>The Handy Penguin</a></h1>
 	</ul>
 </header>
-<a href="/" target="_blank">Open customer view</a> |
-<a href="/dispatcher" target="_blank">Open another dispatcher view</a> |
-<a href="/driver" target="_blank">Open driver view</a>
-<h1>
-	DELIVERY DISPATCHER
-</h1>
 <div id="page">
 	<div id="map-container">
 		<div id="my-map"></div>
 	</div>
 	<div id="my-map"></div>
-	<h1>Orders</h1>
+</div>
+<div id="orders">
 	<ul>
 		<li v-for="order in orders">
 			# {{ order.orderId}} From: {{ order.fromLatLong[0].toFixed(3) }}, {{ order.fromLatLong[1].toFixed(3) }} Destination: {{ order.destLatLong[0].toFixed(3) }}, {{ order.destLatLong[1].toFixed(3) }} Express/Processed: {{ order.expressOrAlreadyProcessed ? "Yes" : "No" }}
