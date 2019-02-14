@@ -1,0 +1,55 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.popup-list {
+	padding-left: 0;
+}
+
+#logo {
+    display: grid;
+    grip-column-gap: 0;
+}
+
+#steffe {
+    grid-column: 1;
+    grid-row: 1;
+    margin-left: 5%;
+}
+
+#slogan {
+    margin-left: -17%;
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 4vw;
+}
+
+#truck {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+#placeOrder {
+    margin-top: 7%;
+    border-style: none;
+    border-top-style: solid;
+}
+
+#orderTitle {
+    font-size: 3.5vw;
+}
+
+#orderButton {
+    font-size: 2vw;
+    margin: 6%;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 50%;
+    Background-color: var(--secondary-color);
+}
+
+#orderButton:hover {
+    Background-color: var(--secondary-dark-color);
+    cursor: progress;
+}
