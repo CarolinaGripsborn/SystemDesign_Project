@@ -36,3 +36,28 @@
 .driver > p {
     margin: 5px;
 }
+
+
+.fab {
+    width: 70px;
+    height: 70px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    box-shadow: 0 6px 10px 0 #0005;
+    transition: all 0.1s ease-in-out;
+
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    line-height: 70px;
+
+    position: fixed;
+    left: calc(50% - 100px);
+    bottom: 50px;
+}
+
+.fab:hover {
+    box-shadow: 0 6px 14px 0 #0005;
+    transform: scale(1.05);
+    cursor: pointer;
+}
