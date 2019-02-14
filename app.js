@@ -40,6 +40,7 @@ app.get('/dispatcher', function (req, res) {
 // prepare for multiple instances of data if necessary
 function Data() {
 	this.orders = {};
+	this.routes = {};
 	this.drivers = {
 		"Stefan":	{
 			"driverId": "Stefan",
@@ -113,6 +114,13 @@ Data.prototype.getAllDrivers = function () {
 	return this.drivers;
 };
 
+Data.prototype.createRoute = function (route) {
+	this.routes[route.id] = route;
+}
+
+Data.prototype.getAllRoutes = function() {
+	return this.routes;
+}
 
 var data = new Data();
 
@@ -143,7 +151,7 @@ io.on('connection', function (socket) {
 		// send updated info to all connected clients, note the use of io instead of socket
 		io.emit('driverUpdated', driver);
 	});
-socket.on('moveDriver', function (driver) {
+	socket.on('moveDriver', function (driver) {
 		console.log("Driver", driver.driverId,"moved to",driver.latLong);
 		data.updateDriverDetails(driver);
 		// send updated info to all connected clients, note the use of io instead of socket
@@ -173,6 +181,12 @@ socket.on('moveDriver', function (driver) {
 		// send updated info to all connected clients, note the use of io instead of socket
 		io.emit('orderDroppedOff', orderId);
 	});
+	socket.on('addRoute', function(route) {
+		console.log("Route", route.id,"was created")
+		data.createRoute(route);
+
+		io.emit('routeAdded', route.id);
+	})
 });
 
 var server = http.listen(app.get('port'), function () {
