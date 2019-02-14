@@ -24,7 +24,37 @@
       </ul>
     </header>
 
-    
+    <section id = "orderInfo" align="center">
+      <h1>Order information</h1>
+      <p id="subTitle">Here you provide the necessary information for your delivery.</p>
+
+      <form>
+        <p>
+          <label for="pickUpAddr">Pick-up address</label><br>
+          <input type="text" id="street1" name="st1" required="required" placeholder="Street name"><br>
+          <input type="number" id="house1" name="nr1" required="required" placeholder="House nr.">
+        </p>
+        <p>
+          <label for="deliveryAddr">Delivery address</label><br>
+          <input type="text" id="street2" name="st2" required="required" placeholder="Street name"><br>
+          <input type="number" id="house2" name="nr2" required="required" placeholder="House nr.">
+        </p>
+        <p>
+          <label for="weight">Package weight</label><br>
+          <input type="number" id="weight" name="pw" required="required" placeholder="Total weight (kg)">
+        </p>
+        <p>
+          <label for="deliveryMethod">Delivery method</label><br>
+          <select id="deliveryMethod" name="delivery">
+            <option>Standard</option>
+            <option>Express</option>
+          </select>
+      </form>
+
+      <form action = "http://localhost:3000/checkout">
+        <button id="checkoutButton" type="place order">Proceed to checkout</button> 
+      </form>
+    </section>
     
   </body>
   
