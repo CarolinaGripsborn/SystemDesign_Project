@@ -3,34 +3,8 @@ body {
 	padding: 0;
 }
 
-#my-map {
-	width: 90%;
-	height: 50vh;
-	border: 1px solid rgba(0,0,0,0.4);
-	box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
-	margin: 1em auto;
-}
-
 .popup-list {
 	padding-left: 0;
-}
-
-#headerBackground {
-    Background-color: #00c853;
-    background-size: cover;
-    Background-position: 100% 100%;
-    height: 5em;
-}
-
-#title {
-    margin-top: -1.6em;
-    font-size: 2.5em;
-    color: white;
-}
-
-#header {
-    margin-top: 1em;
-    margin-bottom: 3em;	
 }
 
 #logo {
@@ -41,31 +15,41 @@ body {
 #steffe {
     grid-column: 1;
     grid-row: 1;
-    margin-left: 8em;
+    margin-left: 5%;
 }
 
 #slogan {
+    margin-left: -17%;
     grid-column: 2;
     grid-row: 1;
-    font-size: 3em;
+    font-size: 4vw;
+}
+
+#truck {
+    grid-column: 3;
+    grid-row: 1;
 }
 
 #placeOrder {
-    margin-top: 3em;
-    font-size: 2em;
-    
+    margin-top: 7%;
+    border-style: none;
+    border-top-style: solid;
+}
+
+#orderTitle {
+    font-size: 3.5vw;
 }
 
 #orderButton {
-    font-size: 1.5em;
-    margin: 3em;
-    padding-left: 2em;
-    padding-right: 2em;
+    font-size: 2vw;
+    margin: 6%;
+    padding-left: 5%;
+    padding-right: 5%;
     border-radius: 50%;
-    Background-color: pink;
+    Background-color: var(--secondary-color);
 }
 
 #orderButton:hover {
-    Background-color: purple;
+    Background-color: var(--secondary-dark-color);
     cursor: progress;
 }

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <link rel="stylesheet" href="/esri-leaflet-geocoder/esri-leaflet-geocoder.css">
   <link rel="stylesheet" href="css/customer.css">
+  <link rel="stylesheet" href="css/shared.css">
   <script src="/vue/vue.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/leaflet/leaflet.js"></script>
@@ -20,33 +21,22 @@
   <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
   <a href="/driver" target="_blank">Open driver view</a>
 
-  <section id = "header">
-  <div id = "headerBackground"></div>
-  <h1 id = "title">The Handy Penguin</h1>
-  </section>
+  <header>
+    <ul>
+      <h1><a>The Handy Penguin</a></h1>
+    </ul>
+  </header>
 
   <section id = "logo">
-    <img id = "steffe" src = "img/SteffePosterBoy.png" width = "200">
+    <img id = "steffe" src = "img/SteffePosterBoy.png" width = "50%">
     <p id = "slogan" >This ain't a bluff,<br> we'll bring your stuff!</p>
+    <img id = "truck" src = "img/SteffeTruck.png" width = "100%">
   </section>
 
-  <section id = "placeOrder">
-    <hr>
-    <h1 align = "center">Order a delivery!</h1>
-  </section>
-
-  <section align = "center">
+  <section id = "placeOrder" align = "center">
+    <h1 id = "orderTitle"><u>Order a delivery!</u></h1>
     <button id = "orderButton"><p>Order!</p></button>
   </section>
   
-  <!--
-  <p>Select pickup location first, then your parcel's destination</p>
-  <div id="page">
-    <div id="my-map"></div><br>
-    <input type="checkbox" v-model="express" @change="moveMarker" name="express" value="express">Check this box for express delivery!</input><br><br>
-    <button v-on:click="placeOrder">ORDER DELIVERY</button>
-    Your order number is {{ orderId }}
-  </div>-->
-
 </body>
 </html>
