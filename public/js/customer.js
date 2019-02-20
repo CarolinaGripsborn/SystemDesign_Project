@@ -100,10 +100,13 @@ var vm = new Vue({
     },
     moveMarker: function (event) {
       this.connectMarkers.setLatLngs(this.getPolylinePoints(), {color: 'blue'});
-      /*socket.emit("moveMarker", { orderId: event.target.orderId,
+      socket.emit("moveMarker", { orderId: event.target.orderId,
                                 latLong: [event.target.getLatLng().lat, event.target.getLatLng().lng]
                                 });
-                                */
+                                
+    },
+      displayOrder: function() {
+          
     }
   }
 });

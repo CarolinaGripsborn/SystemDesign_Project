@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>The Handy Penguin</title>
+    <link rel="stylesheet" href="css/customer.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="/vue/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/leaflet/leaflet.js"></script>
+    <script src="/esri-leaflet/esri-leaflet.js"></script> 
+    <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
+    <script src="js/customer.js" defer></script>
+  </head>
+
+  <body>
+    <a href="/" target="_blank">Open another customer view</a> | 
+    <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
+    <a href="/driver" target="_blank">Open driver view</a>
+
+    <header>
+      <ul>
+        <h1><a>The Handy Penguin</a></h1>
+      </ul>
+    </header>
+
+    <section id = "displayOrder" align = "center">
+      <h1>Your order</h1>
+
+      <div id = "displayPickup"></div>
+      <div id = "displayDelivery"></div>
+      <div id = "displayWeight"></div>
+      <div id = "displayMethod"></div>
+    </section>
+
+    <section id = "checkoutInfo" align = "center">
+      <h1>Checkout info</h1>
+
+      <form id = "form">
+        <p>
+          <label for="Full name">Full name</label><br>
+          <input type="text" id="name" name="fn" required="required" placeholder="First- and last name">
+        </p>
+
+        <p>
+          <label for="Email">Email</label><br>
+          <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
+        </p>
+
+        <p>
+          <label for="Home Addres">Home Address</label><br>
+          <input type="text" id="street" name="st" required="required" placeholder="Street name"><br>
+          <input type="number" id="house" name="nr" required="required" placeholder="House nr.">
+        </p>
+        
+        <label for="payment method">Payment method</label><br>
+        <select id="paymentMethod" name="paym">
+          <option>MasterCard</option>
+          <option>Visa</option>
+          <option>PayPal</option>
+          <option>Pay later</option>
+        </select>
+
+      </form>
+    </section>
+
+    <form action = "" align = "center">
+      <button id="placeOrderButton">Place order!</button> 
+    </form>
+    
+  </body>
+  
+</html>

@@ -1,3 +1,5 @@
+/*For customer.hmtl*/
+
 body {
 	margin: 0;
 	padding: 0;
@@ -53,3 +55,67 @@ body {
     Background-color: var(--secondary-dark-color);
     cursor: progress;
 }
+
+
+
+/*For customer_order.hmtl*/
+
+#orderInfo {
+    margin: 7%;
+    font-size: 200%;
+}
+
+#subTitle {
+    font-size: 80%;
+    margin-bottom: 8%;
+}
+
+#checkoutButton {
+    margin-top: 5%;
+    font-size: 80%;
+    padding: 3%;
+    border-radius: 50%;
+    Background-color: var(--secondary-color);
+}
+
+#checkoutButton:hover {
+    Background-color: var(--secondary-dark-color);
+    cursor: progress;
+}
+
+
+
+/*For customer_checkout.html*/
+
+#displayOrder {
+    font-size: 165%;
+    border-style: inset;
+    border-width: 1.5vw;
+    margin: 8%;
+}
+
+#checkoutInfo {
+    font-size: 165%;
+    border-style: inset;
+    border-width: 1.5vw;
+    margin: 8%;
+}
+
+#placeOrderButton {
+    margin-bottom: 10%;
+    font-size: 170%;
+    padding: 3%;
+    border-radius: 50%;
+    Background-color: var(--secondary-color);
+}
+
+#placeOrderButton:hover {
+    Background-color: var(--secondary-dark-color);
+    cursor: progress;
+}
+
+#form {
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
