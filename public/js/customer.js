@@ -104,6 +104,9 @@ var vm = new Vue({
                                 latLong: [event.target.getLatLng().lat, event.target.getLatLng().lng]
                                 });
                                 
+    },
+      displayOrder: function() {
+          
     }
   }
 });
