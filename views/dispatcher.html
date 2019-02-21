@@ -13,26 +13,25 @@
 	<script src="js/dispatcher.js" defer></script>
 </head>
 <body>
-<header>
-	<ul>
-		<h1><a>The Handy Penguin</a></h1>
-	</ul>
-</header>
-<div id="page">
-	<div id="map-container">
-		<div id="my-map"></div>
-	</div>
-	<div id="my-map"></div>
-</div>
-<div id="drivers">
-	<h2>Current Routes</h2>
-	<div class="driver" v-for="route in routes">
-		<h3>{{route.driver}}</h3>
-		<p>TODO MOAR STUFF</p>
+	<header>
+		<ul>
+			<h1><a>The Handy Penguin</a></h1>
+		</ul>
+	</header>
+	<div id="page">
+		<div id="drivers">
+			<h2>Current Routes</h2>
+			<div class="driver" v-for="route in routes">
+				<h3>{{route.driver}}</h3>
+				<p>Deliveries left: {{route.orders.length}}</p>
 
-	</div>
+			</div>
+			<div class="fab"> + </div>
+		</div>
 
-	<div class="fab"> + </div>
-</div>
+		<div id="map-container">
+			<div id="my-map"></div>
+		</div>
+	</div>
 </body>
 </html>

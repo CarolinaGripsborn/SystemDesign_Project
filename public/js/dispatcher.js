@@ -24,8 +24,8 @@ var vm = new Vue({
             this.baseMarker = L.marker(data.base, {icon: this.baseIcon}).addTo(this.map);
             this.baseMarker.bindPopup("This is the dispatch and routing center");
             // add markers in the map for all orders
-            for (var orderId in data.orders) {
-                this.customerMarkers[orderId] = this.putCustomerMarkers(data.orders[orderId]);
+            for (var route in data.routes) {
+                this.customerMarkers[route] = this.putCustomerMarkers(data.routes[route]);
             }
             // add driver markers in the map for all drivers
             for (var driverId in data.drivers) {
@@ -116,7 +116,7 @@ var vm = new Vue({
             popup.appendChild(list);
             return popup;
         },
-        getPolylinePoints: function(order) {
+        getPolylinePoint: function(order) {
             if (order.expressOrAlreadyProcessed) {
                 return [order.fromLatLong, order.destLatLong];
             } else {
@@ -129,15 +129,34 @@ var vm = new Vue({
             marker.driverId = driver.driverId;
             return marker;
         },
-        putCustomerMarkers: function (order) {
-            var fromMarker = L.marker(order.fromLatLong, {icon: this.fromIcon}).addTo(this.map);
+        putCustomerMarkers: function (route) {
+            let len = route.orders.length;
+
+            for (let i = 1; i < len; i++) {
+                let start = this.orders[route.orders[i-1]];
+                let end = this.orders[route.orders[i]];
+                L.polyline([start.fromLatLong, end.fromLatLong]).addTo(this.map);
+            }
+
+            // Put in the first line from driver
+            let first = this.orders[route.orders[0]];
+            let driver = this.drivers[route.driver];
+
+            L.polyline([driver.latLong, first.fromLatLong]).addTo(this.map);
+
+            //Put in the last line to base
+            let last = this.orders[route.orders[route.orders.length - 1]];
+
+            L.polyline([last.fromLatLong, this.baseMarker.getLatLng()]).addTo(this.map);
+
+            /*var fromMarker = L.marker(order.fromLatLong, {icon: this.fromIcon}).addTo(this.map);
             fromMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
             fromMarker.orderId = order.orderId;
             var destMarker = L.marker(order.destLatLong).addTo(this.map);
             destMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
             destMarker.orderId = order.orderId;
             var connectMarkers = L.polyline(this.getPolylinePoints(order), {color: 'blue'}).addTo(this.map);
-            return {from: fromMarker, dest: destMarker, line: connectMarkers};
+            return {from: fromMarker, dest: destMarker, line: connectMarkers};*/
         },
         assignDriver: function (order) {
             socket.emit("driverAssigned", order);

@@ -116,32 +116,55 @@ var data = new Data();
 data.drivers["Stefan"] = {
 	"driverId": "Stefan",
 	"latLong": {
-		"lat": 100, "lng": 100
+		"lat": 57, "lng": 15
 	}
 }
 data.drivers["Zarah"] = {
 	"driverId": "Zarah",
 	"latLong": {
-		"lat": 100, "lng": 100
+		"lat": 57, "lng": 16
 	}
 }
 
+data.orders[997] = {
+	"fromLatLong": [58, 16],
+	"destLatLong": [60, 16],
+	"expressOrAlreadyProcessed": false,
+	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
+}
+
+data.orders[998] = {
+	"fromLatLong": [59, 16],
+	"destLatLong": [60, 16],
+	"expressOrAlreadyProcessed": false,
+	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
+}
+
 data.orders[999] = {
-	"fromLatLong": [100, 100],
-	"destLatLong": [100, 100],
+	"fromLatLong": [59, 17],
+	"destLatLong": [60, 17],
 	"expressOrAlreadyProcessed": true,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 }
 
 data.routes[0] = {
 	"driver": "Stefan",
+	"orders": [997, 998]
+}
+
+data.routes[1] = {
+	"driver": "Zarah",
 	"orders": [999]
 }
 
+
 io.on('connection', function (socket) {
 	// Send the current lists of orders and drivers when a client connects
-	socket.emit('initialize', { orders: data.getAllOrders(),
-															drivers: data.getAllDrivers(), base: data.baseLatLong });
+	socket.emit('initialize', {
+		orders: data.getAllOrders(),
+		drivers: data.getAllDrivers(),
+		routes: data.getAllRoutes(),
+		base: data.baseLatLong });
 	// Add a listener for when a connected client emits a "placeOrder" message
 	socket.on('placeOrder', function (order) {
 		var orderId = data.addOrder(order);
