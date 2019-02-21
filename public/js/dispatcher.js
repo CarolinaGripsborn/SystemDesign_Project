@@ -72,7 +72,7 @@ var vm = new Vue({
         this.driverIcon = L.icon({
             iconUrl: "img/driver.png",
             iconSize: [36,20],
-            iconAnchor: [18,22],
+            iconAnchor: [20,0],
             popupAnchor: [0,-20]
         });
 
@@ -148,6 +148,15 @@ var vm = new Vue({
             let last = this.orders[route.orders[route.orders.length - 1]];
 
             L.polyline([last.fromLatLong, this.baseMarker.getLatLng()]).addTo(this.map);
+
+
+            // Put in the order icons
+            for (let i=0; i < len; i++) {
+                let order = this.orders[route.orders[i]];
+                var destMarker = L.marker(order.fromLatLong).addTo(this.map);
+                destMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
+                destMarker.orderId = order.orderId;
+            }
 
             /*var fromMarker = L.marker(order.fromLatLong, {icon: this.fromIcon}).addTo(this.map);
             fromMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
