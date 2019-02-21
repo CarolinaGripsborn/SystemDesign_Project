@@ -10,7 +10,9 @@
     <script src="/leaflet/leaflet.js"></script>
     <script src="/esri-leaflet/esri-leaflet.js"></script> 
     <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
-    <script src="js/customer.js" defer></script>
+    <script src="js/customer.js" defer>
+    </script>
+    
   </head>
 
   <body>
@@ -25,12 +27,16 @@
     </header>
 
     <section id = "displayOrder" align = "center">
-      <h1>Your order</h1>
+      <div id = "yourOrder"><h1>Your order</h1></div>
 
-      <div id = "displayPickup"></div>
-      <div id = "displayDelivery"></div>
-      <div id = "displayWeight"></div>
-      <div id = "displayMethod"></div>
+      <h4>Pick-up address</h4>
+      <div id = "displayPickup"></div><br>
+      <h4>Delivery address</h4>
+      <div id = "displayDelivery"></div><br>
+      <h4>Package weight</h4>
+      <div id = "displayWeight"></div><br>
+      <h4>Delivery method</h4>
+      <div id = "displayMethod"></div><br>
     </section>
 
     <section id = "checkoutInfo" align = "center">

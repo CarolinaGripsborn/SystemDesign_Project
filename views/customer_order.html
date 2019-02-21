@@ -17,7 +17,7 @@
     <a href="/" target="_blank">Open another customer view</a> | 
     <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
     <a href="/driver" target="_blank">Open driver view</a>
-
+    
     <header>
       <ul>
         <h1><a>The Handy Penguin</a></h1>
@@ -50,10 +50,11 @@
             <option>Express</option>
           </select>
       </form>
-
-      <form action = "http://localhost:3000/checkout">
-        <button id="checkoutButton" type="place order">Proceed to checkout</button> 
-      </form>
+      
+      <div id = "test"></div>
+      <!--<form action = "http://localhost:3000/checkout">-->
+        <button id="checkoutButton" onclick="getOrderInfo()">Proceed to checkout</button>
+      
     </section>
     
   </body>
