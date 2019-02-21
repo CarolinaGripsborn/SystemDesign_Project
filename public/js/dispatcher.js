@@ -163,3 +163,8 @@ var vm = new Vue({
         }
     }
 });
+
+$('.nav-side .fab').on('click', function(e) {
+    e.preventDefault();
+    $(this).parent().toggleClass('nav-open');
+});

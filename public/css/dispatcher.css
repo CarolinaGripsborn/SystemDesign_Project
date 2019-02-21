@@ -1,3 +1,30 @@
+#drivers {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 999999;
+}
+
+.nav-side {
+    position: fixed;
+    left: 0;
+    top: 88;
+    height: 100%;
+    width: 100%;
+    max-width: 48%;
+    background-color: whitesmoke;
+    box-sizing: border-box;
+    padding: 20px;
+    color: white;
+    margin-left: -48%;
+    transition: margin 200ms ease-in-out;
+    z-index: 9000;
+    font-weight: 600;
+}
+
+.nav-side.nav-open {
+    margin-left: 0;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
 #map-container {
     /*margin: 0 auto;*/
     width: 50%;
@@ -54,6 +81,7 @@
     position: fixed;
     left: calc(50% - 100px);
     bottom: 50px;
+    text-decoration: none;
 }
 
 .fab:hover {
