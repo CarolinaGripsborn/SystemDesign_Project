@@ -35,8 +35,12 @@ var vm = new Vue({
             var allRouteOrders = Object.values(this.routes).map(x => x.orders).flat();
 
             // Add some additional data to orders
-            for (var order in this.orders) {
-                this.orders[order]["isRouted"] = (allRouteOrders.includes(order.id));
+            for (var key in this.orders) {
+                var order = this.orders[key];
+
+                order.id = parseInt(key);
+                order.isRouted = (allRouteOrders.includes(order.id));
+                order.selected = false;
             }
 
         }.bind(this));
@@ -110,6 +114,10 @@ var vm = new Vue({
         }).addTo(this.map);
     },
     methods: {
+        selectOrder: function(orderId) {
+
+        },
+
         createPopup: function (orderId, items) {
             var popup = document.createElement('div');
             popup.appendChild(document.createTextNode('Order ' + orderId));
@@ -124,6 +132,7 @@ var vm = new Vue({
             popup.appendChild(list);
             return popup;
         },
+        
         getPolylinePoint: function(order) {
             if (order.expressOrAlreadyProcessed) {
                 return [order.fromLatLong, order.destLatLong];

@@ -27,7 +27,14 @@
 			<p>Deliveries left: {{route.orders.length}}</p>
 		</div>
 		<nav class="nav-side">
-			Slide
+			<h2>New Route</h2>
+
+			<h3>Unassigned orders</h3>
+			<div class="unassigned-order" v-for="order in orders" v-if="order.isRouted == false">
+				<p>Order #{{order.id}}</p>
+				<p>From: {{order.fromText}}</p>
+				<p>To: {{order.destText}}</p>
+			</div>
 			<a href="#" class="fab">+</a>
 		</nav>
 		<div class="fab"> + </div>
