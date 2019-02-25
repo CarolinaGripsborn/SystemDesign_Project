@@ -12,7 +12,10 @@ var vm = new Vue({
         routes: {},
         customerMarkers: {},
         driverMarkers: {},
-        baseMarker: null
+        newRouteMarkers: {},
+        newRouteLines: [],
+        baseMarker: null,
+        newRouteOrders: []
     },
 
     created: function () {
@@ -23,14 +26,8 @@ var vm = new Vue({
             // add marker for home base in the map
             this.baseMarker = L.marker(data.base, {icon: this.baseIcon}).addTo(this.map);
             this.baseMarker.bindPopup("This is the dispatch and routing center");
-            // add markers in the map for all orders
-            for (var route in data.routes) {
-                this.customerMarkers[route] = this.putCustomerMarkers(data.routes[route]);
-            }
-            // add driver markers in the map for all drivers
-            for (var driverId in data.drivers) {
-                this.driverMarkers[driverId] = this.putDriverMarker(data.drivers[driverId]);
-            }
+
+            this.putBaseMapMarkers();
 
             var allRouteOrders = Object.values(this.routes).map(x => x.orders).flat();
 
@@ -115,17 +112,45 @@ var vm = new Vue({
     },
     methods: {
         onSelectOrder: function(order, eve) {
-            console.log("AAAAAAAAAAAA");
 
             let selectedOrderDom = eve.target.closest(".unassigned-order");
 
-            console.log(selectedOrderDom);
-            console.log(order.selected);
-
             order.selected = !order.selected;
 
-            selectedOrderDom.style.backgroundColor = order.selected ? "#ddd" : "#fff";
+            if (order.selected) {
+                this.newRouteOrders.push(order.id);
 
+                // Add the marker
+                const marker = L.marker(order.fromLatLong).addTo(this.map);
+                let line = null;
+
+                this.newRouteMarkers[order.id] = marker;
+            } else {
+                // Removing from an array is so fun in javascript ._.
+                const index = this.newRouteOrders.indexOf(order.id);
+                this.newRouteOrders.splice(index, 1);
+                const icon = this.newRouteMarkers[order.id];
+                icon.remove();
+                delete this.newRouteMarkers[order.id];
+            }
+
+            console.log(this.newRouteOrders);
+
+            selectedOrderDom.style.backgroundColor = order.selected ? "#ddd" : "#fff";
+            this.newRoutePutLines();
+
+        },
+
+        newRoutePutLines: function() {
+
+            //Remove old lines
+            this.newRouteLines.map(x => x.remove());
+
+            for (let i = 1; i < this.newRouteOrders.length; i++) {
+                let start = this.orders[this.newRouteOrders[i-1]];
+                let end = this.orders[this.newRouteOrders[i]];
+                this.newRouteLines.push(L.polyline([start.fromLatLong, end.fromLatLong], {color: 'green'}).addTo(this.map));
+            }
         },
 
         createPopup: function (orderId, items) {
@@ -143,6 +168,17 @@ var vm = new Vue({
             return popup;
         },
 
+        putBaseMapMarkers : function() {
+            // add markers in the map for all routes
+            for (var route in this.routes) {
+                this.customerMarkers[route] = this.putRouteMarkers(this.routes[route]);
+            }
+            // add driver markers in the map for all drivers
+            for (var driverId in this.drivers) {
+                this.driverMarkers[driverId] = this.putDriverMarker(this.drivers[driverId]);
+            }
+        },
+
         getPolylinePoint: function(order) {
             if (order.expressOrAlreadyProcessed) {
                 return [order.fromLatLong, order.destLatLong];
@@ -156,7 +192,7 @@ var vm = new Vue({
             marker.driverId = driver.driverId;
             return marker;
         },
-        putCustomerMarkers: function (route) {
+        putRouteMarkers: function (route) {
             let len = route.orders.length;
 
             for (let i = 1; i < len; i++) {

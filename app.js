@@ -118,22 +118,30 @@ data.drivers["Stefan"] = {
 	"latLong": {
 		"lat": 57, "lng": 15
 	}
-}
+};
+
 data.drivers["Zarah"] = {
 	"driverId": "Zarah",
 	"latLong": {
 		"lat": 57, "lng": 16
 	}
-}
+};
+
+data.drivers["Mikael"] = {
+	"driverId": "Mikael",
+	"latLong": {
+		"lat": 55, "lng": 16
+	}
+};
 
 data.orders[994] = {
 	"destText": "Vänstersvängen",
 	"fromText": "Högertrafiken 20",
-	"fromLatLong": [58.2, 12.5],
+	"fromLatLong": [58.0, 12.1],
 	"destLatLong": [60.8, 15.5],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
-}
+};
 
 data.orders[995] = {
 	"destText": "Ostgränden 14b",
@@ -142,7 +150,7 @@ data.orders[995] = {
 	"destLatLong": [60.8, 15.5],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
-}
+};
 
 data.orders[996] = {
 	"destText": "Sickagatan 5",
@@ -151,7 +159,7 @@ data.orders[996] = {
 	"destLatLong": [60.5, 16.5],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
-}
+};
 
 data.orders[997] = {
 	"destText": "Sickagatan 5",
@@ -160,7 +168,7 @@ data.orders[997] = {
 	"destLatLong": [60, 16],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
-}
+};
 
 data.orders[998] = {
 	"destText": "Sickagatan 5",
@@ -169,7 +177,7 @@ data.orders[998] = {
 	"destLatLong": [60, 16],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
-}
+};
 
 data.orders[999] = {
 	"destText": "Sickagatan 5",
@@ -178,17 +186,17 @@ data.orders[999] = {
 	"destLatLong": [60, 17],
 	"expressOrAlreadyProcessed": true,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
-}
+};
 
 data.routes[0] = {
 	"driver": "Stefan",
 	"orders": [997, 998]
-}
+};
 
 data.routes[1] = {
 	"driver": "Zarah",
 	"orders": [999]
-}
+};
 
 
 io.on('connection', function (socket) {

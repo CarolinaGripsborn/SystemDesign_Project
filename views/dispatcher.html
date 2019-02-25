@@ -30,15 +30,23 @@
 			<h2>New Route</h2>
 
 			<h3>Unassigned orders</h3>
-			<div class="unassigned-order"
-			     v-for="order in orders"
-			     v-if="order.isRouted == false"
-			     v-on:click="onSelectOrder(order, $event)"
-			>
-				<p>Order #{{order.id}}</p>
-				<p>From: {{order.fromText}}</p>
-				<p>To: {{order.destText}}</p>
+			<div id="order-scroller">
+				<div class="unassigned-order"
+					 v-for="order in orders"
+					 v-if="order.isRouted == false"
+					 v-on:click="onSelectOrder(order, $event)"
+				>
+					<p>Order #{{order.id}}</p>
+					<p>From: {{order.fromText}}</p>
+					<p>To: {{order.destText}}</p>
+				</div>
 			</div>
+			<p>Driver</p>
+			<select id="new-route-driver">
+				<option v-for = "driver in drivers">
+					{{driver.driverId}}
+				</option>
+			</select>
 			<a href="#" class="fab">+</a>
 		</nav>
 		<div class="fab"> + </div>
