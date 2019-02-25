@@ -114,7 +114,17 @@ var vm = new Vue({
         }).addTo(this.map);
     },
     methods: {
-        selectOrder: function(orderId) {
+        onSelectOrder: function(order, eve) {
+            console.log("AAAAAAAAAAAA");
+
+            let selectedOrderDom = eve.target.closest(".unassigned-order");
+
+            console.log(selectedOrderDom);
+            console.log(order.selected);
+
+            order.selected = !order.selected;
+
+            selectedOrderDom.style.backgroundColor = order.selected ? "#ddd" : "#fff";
 
         },
 
@@ -132,7 +142,7 @@ var vm = new Vue({
             popup.appendChild(list);
             return popup;
         },
-        
+
         getPolylinePoint: function(order) {
             if (order.expressOrAlreadyProcessed) {
                 return [order.fromLatLong, order.destLatLong];
