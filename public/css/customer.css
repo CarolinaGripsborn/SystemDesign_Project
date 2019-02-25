@@ -1,3 +1,5 @@
+/*For customer.hmtl*/
+
 body {
 	margin: 0;
 	padding: 0;
@@ -12,28 +14,36 @@ body {
     grip-column-gap: 0;
 }
 
-#steffe {
-    grid-column: 1;
-    grid-row: 1;
-    margin-left: 5%;
-}
 
 #slogan {
-    margin-left: -17%;
-    grid-column: 2;
+    margin-left: 5%;
+    grid-column: 1;
     grid-row: 1;
-    font-size: 4vw;
+    border-style: hidden;
+    border-width: 50%;
+    border-radius: 48%;
+    background-color: var(--secondary-light-color);
+    padding: 12%; 
+    margin-left: 30%;
+    margin-right: -12%;
+    margin-top: 15%;
+    margin-bottom: 8%;
+    font-size: 203%;
+    font-style: italic;
 }
 
+
 #truck {
-    grid-column: 3;
+    grid-column: 2;
     grid-row: 1;
+    margin-left: 25%;
+    margin-top: 5%;
 }
 
 #placeOrder {
-    margin-top: 7%;
-    border-style: none;
-    border-top-style: solid;
+    border-style: inset;
+    border-width: 1.5vw;
+    margin: 8%;
 }
 
 #orderTitle {
@@ -53,3 +63,74 @@ body {
     Background-color: var(--secondary-dark-color);
     cursor: progress;
 }
+
+
+
+/*For customer_order.hmtl*/
+
+#orderInfo {
+    margin: 7%;
+    font-size: 200%;
+}
+
+#subTitle {
+    font-size: 80%;
+    margin-bottom: 8%;
+}
+
+#checkoutButton {
+    margin-top: 5%;
+    font-size: 80%;
+    padding: 3%;
+    border-radius: 50%;
+    Background-color: var(--secondary-color);
+}
+
+#checkoutButton:hover {
+    Background-color: var(--secondary-dark-color);
+    cursor: progress;
+}
+
+
+
+/*For customer_checkout.html*/
+
+#displayOrder {
+    font-size: 165%;
+    border-style: inset;
+    border-width: 1.5vw;
+    margin: 8%;
+}
+
+#checkoutInfo {
+    font-size: 165%;
+    border-style: inset;
+    border-width: 1.5vw;
+    margin: 8%;
+}
+
+#placeOrderButton {
+    margin-bottom: 10%;
+    font-size: 170%;
+    padding: 3%;
+    border-radius: 50%;
+    Background-color: var(--secondary-color);
+}
+
+#placeOrderButton:hover {
+    Background-color: var(--secondary-dark-color);
+    cursor: progress;
+}
+
+#form {
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+#yourOrder {
+    margin-bottom: 10%;
+}
+
+
+
+ 
