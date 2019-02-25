@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,11 +42,13 @@
 				</div>
 			</div>
 			<p>Driver</p>
-			<select id="new-route-driver">
+			<select v-model="newRouteDriver" id="new-route-driver">
 				<option v-for = "driver in drivers">
 					{{driver.driverId}}
 				</option>
 			</select>
+			<button v-on:click="onFinishNewRoute()">Save Route</button>
+
 			<a href="#" class="fab">+</a>
 		</nav>
 		<div class="fab"> + </div>

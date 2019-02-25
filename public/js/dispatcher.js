@@ -14,6 +14,7 @@ var vm = new Vue({
         driverMarkers: {},
         newRouteMarkers: {},
         newRouteLines: [],
+        newRouteDriver: "",
         baseMarker: null,
         newRouteOrders: []
     },
@@ -111,6 +112,40 @@ var vm = new Vue({
         }).addTo(this.map);
     },
     methods: {
+        getNextRouteNumber : function() {
+            let max = 0;
+            for (let route in this.routes) {
+                max = Math.max(max, route);
+            }
+
+            return (max+1).toString();
+        },
+
+        onFinishNewRoute: function() {
+
+            // Add the route to routes
+            const newID = this.getNextRouteNumber();
+            this.routes[newID] = {driver: this.newRouteDriver, orders: this.newRouteOrders };
+
+            for (let marker in this.newRouteMarkers) {
+                this.newRouteMarkers[marker].remove();
+            }
+            this.newRouteMarkers = {};
+            this.newRouteOrders = [];
+            this.newRoutePutLines();
+
+            // Draw the new route
+            this.putRouteMarkers(this.routes[newID]);
+
+            console.log(JSON.stringify(this.routes));
+
+            // Make vue update
+            this.$forceUpdate();
+
+            // Close the menu
+            // TODO ALEX;
+        },
+
         onSelectOrder: function(order, eve) {
 
             let selectedOrderDom = eve.target.closest(".unassigned-order");
@@ -122,7 +157,6 @@ var vm = new Vue({
 
                 // Add the marker
                 const marker = L.marker(order.fromLatLong).addTo(this.map);
-                let line = null;
 
                 this.newRouteMarkers[order.id] = marker;
             } else {

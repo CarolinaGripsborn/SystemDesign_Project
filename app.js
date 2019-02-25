@@ -116,29 +116,29 @@ var data = new Data();
 data.drivers["Stefan"] = {
 	"driverId": "Stefan",
 	"latLong": {
-		"lat": 57, "lng": 15
+		"lat": 59.947, "lng": 17.8145
 	}
 };
 
 data.drivers["Zarah"] = {
 	"driverId": "Zarah",
 	"latLong": {
-		"lat": 57, "lng": 16
+		"lat": 59.742, "lng": 17.45
 	}
 };
 
 data.drivers["Mikael"] = {
 	"driverId": "Mikael",
 	"latLong": {
-		"lat": 55, "lng": 16
+		"lat": 59.641, "lng":17.53
 	}
 };
 
 data.orders[994] = {
 	"destText": "Vänstersvängen",
 	"fromText": "Högertrafiken 20",
-	"fromLatLong": [58.0, 12.1],
-	"destLatLong": [60.8, 15.5],
+	"fromLatLong": [59.840, 17.64],
+	"destLatLong": [59.640, 17.54],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
@@ -146,8 +146,8 @@ data.orders[994] = {
 data.orders[995] = {
 	"destText": "Ostgränden 14b",
 	"fromText": "Briegatan 20",
-	"fromLatLong": [58.2, 12.5],
-	"destLatLong": [60.8, 15.5],
+	"fromLatLong": [59.845, 17.546],
+	"destLatLong": [54.842, 17.643],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
@@ -155,8 +155,8 @@ data.orders[995] = {
 data.orders[996] = {
 	"destText": "Sickagatan 5",
 	"fromText": "Polkavägen 6",
-	"fromLatLong": [58.5, 16.5],
-	"destLatLong": [60.5, 16.5],
+	"fromLatLong": [59.746, 17.647],
+	"destLatLong": [59.249, 17.345],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
@@ -164,8 +164,8 @@ data.orders[996] = {
 data.orders[997] = {
 	"destText": "Sickagatan 5",
 	"fromText": "Polkavägen 6",
-	"fromLatLong": [58, 16],
-	"destLatLong": [60, 16],
+	"fromLatLong": [59.849, 17.65],
+	"destLatLong": [59.545, 17.42],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
@@ -173,8 +173,8 @@ data.orders[997] = {
 data.orders[998] = {
 	"destText": "Sickagatan 5",
 	"fromText": "Polkavägen 6",
-	"fromLatLong": [59, 16],
-	"destLatLong": [60, 16],
+	"fromLatLong": [59.942, 17.847],
+	"destLatLong": [59.645, 17.645],
 	"expressOrAlreadyProcessed": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
@@ -182,15 +182,15 @@ data.orders[998] = {
 data.orders[999] = {
 	"destText": "Sickagatan 5",
 	"fromText": "Polkavägen 6",
-	"fromLatLong": [59, 17],
-	"destLatLong": [60, 17],
+	"fromLatLong": [59.641, 17.446],
+	"destLatLong": [59.840, 17.56],
 	"expressOrAlreadyProcessed": true,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
 data.routes[0] = {
 	"driver": "Stefan",
-	"orders": [997, 998]
+	"orders": [998, 997]
 };
 
 data.routes[1] = {
