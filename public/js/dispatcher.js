@@ -31,6 +31,14 @@ var vm = new Vue({
             for (var driverId in data.drivers) {
                 this.driverMarkers[driverId] = this.putDriverMarker(data.drivers[driverId]);
             }
+
+            var allRouteOrders = Object.values(this.routes).map(x => x.orders).flat();
+
+            // Add some additional data to orders
+            for (var order in this.orders) {
+                this.orders[order]["isRouted"] = (allRouteOrders.includes(order.id));
+            }
+
         }.bind(this));
 
         socket.on('driverAdded', function (driver) {
