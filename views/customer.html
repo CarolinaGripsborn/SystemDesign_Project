@@ -3,30 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DELIVERY CUSTOMER</title>
+  <title>The Handy Penguin</title>
   <link rel="stylesheet" href="/leaflet/leaflet.css">
   <link rel="stylesheet" href="/esri-leaflet-geocoder/esri-leaflet-geocoder.css">
+  <link rel="stylesheet" href="css/customer.css">
   <link rel="stylesheet" href="css/shared.css">
+  <script src="customer_order.html"></script>
   <script src="/vue/vue.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/leaflet/leaflet.js"></script>
   <script src="/esri-leaflet/esri-leaflet.js"></script> 
-  <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script> 
+  <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
   <script src="js/customer.js" defer></script>
 </head>
+
 <body>
   <a href="/" target="_blank">Open another customer view</a> | 
   <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
   <a href="/driver" target="_blank">Open driver view</a>
-  <h1>
-    DELIVERY CUSTOMER 
-  </h1>
-  <p>Select pickup location first, then your parcel's destination</p>
-  <div id="page">
-    <div id="my-map"></div><br>
-    <input type="checkbox" v-model="express" @change="moveMarker" name="express" value="express">Check this box for express delivery!</input><br><br>
-    <button v-on:click="placeOrder">ORDER DELIVERY</button>
-    Your order number is {{ orderId }}
-  </div>
+
+  <header>
+    <ul>
+      <h1><a>The Handy Penguin</a></h1>
+    </ul>
+  </header>
+
+  <section id = "logo">
+    <p id = "slogan">This ain't a bluff, <br>we'll bring your stuff!</p>
+    <img id = "truck" src = "img/SteffeTruck.png" width = "70%">
+  </section>
+
+  <section id = "placeOrder" align = "center">
+    <form action="http://localhost:3000/order">
+    <h1 id = "orderTitle">Order a delivery!</h1>
+    <button id = "orderButton"><p>Order!</p></button>
+  </form>
+  </section>
+  
 </body>
 </html>

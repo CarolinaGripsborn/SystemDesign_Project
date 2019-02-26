@@ -35,6 +35,14 @@ app.get('/driver', function (req, res) {
 app.get('/dispatcher', function (req, res) {
 	res.sendFile(path.join(__dirname, 'views/dispatcher.html'));
 });
+// Serve customer_order.html as /order
+app.get('/order', function (req, res) {
+  res.sendFile(path.join(__dirname, 'views/customer_order.html'));
+});
+// Serve customer_checkout.html as /checkout
+app.get('/checkout', function (req, res) {
+  res.sendFile(path.join(__dirname, 'views/customer_checkout.html'));
+});
 
 // Store data in an object to keep the global namespace clean and 
 // prepare for multiple instances of data if necessary

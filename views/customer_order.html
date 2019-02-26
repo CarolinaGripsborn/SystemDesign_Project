@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>The Handy Penguin</title>
+    <link rel="stylesheet" href="css/customer.css">
+    <link rel="stylesheet" href="css/shared.css">
+    <script src="/vue/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/leaflet/leaflet.js"></script>
+    <script src="/esri-leaflet/esri-leaflet.js"></script> 
+    <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
+    <script src="js/customer.js" defer></script>    
+  </head>
+
+  <body>
+    <a href="/" target="_blank">Open another customer view</a> | 
+    <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
+    <a href="/driver" target="_blank">Open driver view</a>
+    
+    <header>
+      <ul>
+        <h1><a>The Handy Penguin</a></h1>
+      </ul>
+    </header>
+
+    <section id = "orderInfo" align="center">
+      <h1>Order information</h1>
+      <p id="subTitle">Here you provide the necessary information for your delivery.</p>
+
+      <form>
+        <p>
+          <label for="pickUpAddr">Pick-up address</label><br>
+          <input type="text" id="street1" name="st1" required="required" placeholder="Street name"><br>
+          <input type="number" id="house1" name="nr1" required="required" placeholder="House nr.">
+        </p>
+        <p>
+          <label for="deliveryAddr">Delivery address</label><br>
+          <input type="text" id="street2" name="st2" required="required" placeholder="Street name"><br>
+          <input type="number" id="house2" name="nr2" required="required" placeholder="House nr.">
+        </p>
+        <p>
+          <label for="weight">Package weight</label><br>
+          <input type="number" id="weight" name="pw" required="required" placeholder="Total weight (kg)">
+        </p>
+        <p>
+          <label for="deliveryMethod">Delivery method</label><br>
+          <select id="deliveryMethod" name="delivery">
+            <option>Standard</option>
+            <option>Express</option>
+          </select>
+      </form>
+      
+      <div id = "test"></div>
+      <!--<form action = "http://localhost:3000/checkout">-->
+        <button id="checkoutButton" onclick="getOrderInfo()">Proceed to checkout</button>
+      
+    </section>
+    
+  </body>
+  
+</html>
