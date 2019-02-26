@@ -112,16 +112,6 @@ var vm = new Vue({
         }).addTo(this.map);
     },
     methods: {
-        assignNewOrders: function() {
-            this.isAssignOpen = !this.isAssignOpen;
-            var nav = document.getElementById("navig");
-            if (this.isAssignOpen) {
-                nav.className = "nav-open";
-            } else {
-                nav.className = "nav-side";
-            }
-        },
-
         getNextRouteNumber : function() {
             let max = 0;
             for (let route in this.routes) {
