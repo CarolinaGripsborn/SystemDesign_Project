@@ -25,49 +25,57 @@
         <h1><a>The Handy Penguin</a></h1>
       </ul>
     </header>
-
-    <section id = "displayOrder" align = "center">
-      <div id = "yourOrder"><h1>Your order</h1></div>
-
-      <h4>Pick-up address</h4>
-      <div id = "displayPickup"></div><br>
-      <h4>Delivery address</h4>
-      <div id = "displayDelivery"></div><br>
-      <h4>Package weight</h4>
-      <div id = "displayWeight"></div><br>
-      <h4>Delivery method</h4>
-      <div id = "displayMethod"></div><br>
-    </section>
-
-    <section id = "checkoutInfo" align = "center">
-      <h1>Checkout info</h1>
-
-      <form id = "form">
-        <p>
-          <label for="Full name">Full name</label><br>
-          <input type="text" id="name" name="fn" required="required" placeholder="First- and last name">
-        </p>
-
-        <p>
-          <label for="Email">Email</label><br>
-          <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
-        </p>
-
-        <p>
-          <label for="Home Addres">Home Address</label><br>
-          <input type="text" id="street" name="st" required="required" placeholder="Street name"><br>
-          <input type="number" id="house" name="nr" required="required" placeholder="House nr.">
-        </p>
+   
+    <section id = "grid">
+      <div id = "yourOrder" align = "center">
+        <h1>Your order</h1>
+      </div>
+      <div id = "checkout" align = "center">
+        <h1>Customer info</h1>
+        <div id = "subTitle2">Please fill out personal info</div>
+      </div>
         
-        <label for="payment method">Payment method</label><br>
-        <select id="paymentMethod" name="paym">
-          <option>MasterCard</option>
-          <option>Visa</option>
-          <option>PayPal</option>
-          <option>Pay later</option>
-        </select>
+      <section id = "displayOrder" align = "center">
+      
+        <h4 style="font-size:110%">Pick-up address</h4>
+        <div id = "displayPickup"></div>
+        <h4 style="font-size:110%">Delivery address</h4>
+        <div id = "displayDelivery"></div>
+        <h4 style="font-size:110%">Package weight</h4>
+        <div id = "displayWeight"></div>
+        <h4 style="font-size:110%">Delivery method</h4>
+        <div id = "displayMethod"></div>
+      </section>
 
-      </form>
+      <section id = "checkoutInfo" align = "center"> 
+
+        <form id = "form">
+          <p>
+            <label for="Full name">Full name</label><br>
+            <input type="text" id="name" name="fn" required="required" placeholder="First- and last name">
+          </p>
+
+          <p>
+            <label for="Email">Email</label><br>
+            <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
+          </p>
+
+          <p>
+            <label for="Home Addres">Home Address</label><br>
+            <input type="text" id="street" name="st" required="required" placeholder="Street name"><br>
+            <input type="number" id="house" name="nr" required="required" placeholder="House nr.">
+          </p>
+          
+          <label for="payment method">Payment method</label><br>
+          <select id="paymentMethod" name="paym">
+            <option>MasterCard</option>
+            <option>Visa</option>
+            <option>PayPal</option>
+            <option>Pay later</option>
+          </select>
+
+        </form>
+      </section>
     </section>
 
     <form align="center">
