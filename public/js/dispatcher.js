@@ -2,6 +2,9 @@
 /*global Vue, io */
 /* exported vm */
 'use strict';
+
+const MDCSelect = mdc.select.MDCSelect;
+
 var socket = io();
 
 var vm = new Vue({
@@ -286,6 +289,8 @@ var vm = new Vue({
         }
     }
 });
+
+const select = new MDCSelect(document.querySelector('.mdc-select'));
 
 $('.nav-side .fab').on('click', function(e) {
     e.preventDefault();

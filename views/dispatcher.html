@@ -8,12 +8,12 @@
 	<link rel="stylesheet" href="css/shared.css">
 	<link rel="stylesheet" href="css/dispatcher.css">
 	<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 	<script src="/vue/vue.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/leaflet/leaflet.js"></script>
 	<script src="js/dispatcher.js" defer></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
 </head>
 <body>
@@ -45,12 +45,18 @@
 				</div>
 			</div>
 			<p>Driver</p>
-			<select v-model="newRouteDriver" id="new-route-driver">
+			<div class="mdc-select">
+				<i class="mdc-select__dropdown-icon"></i>
+			<select  class="mdc-select__native-control" v-model="newRouteDriver" id="new-route-driver">
 				<option v-for = "driver in drivers">
 					{{driver.driverId}}
 				</option>
 			</select>
-			<button class="mdc-button mdc-button--raised" v-on:click="onFinishNewRoute()">Save Route</button>
+				<label class="mdc-floating-label">Select a driver</label>
+				<div class="mdc-line-ripple"></div>
+			</div>
+			<br>
+			<button id="submit-new-route" class="mdc-button mdc-button--raised" v-on:click="onFinishNewRoute()">Assign Route</button>
 
 			<a href="#" class="fab"></a>
 		</nav>

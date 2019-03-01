@@ -121,3 +121,11 @@
     transform: scale(1.05);
     cursor: pointer;
 }
+
+#submit-new-route {
+    margin-top: 10px;
+}
+
+#new-route-driver {
+    width: 300px;
+}
