@@ -32,9 +32,9 @@
 			<h3>Unassigned orders</h3>
 			<div id="order-scroller">
 				<div class="unassigned-order"
-					 v-for="order in orders"
-					 v-if="order.isRouted == false"
-					 v-on:click="onSelectOrder(order, $event)"
+				     v-for="order in orders"
+				     v-if="order.isRouted == false"
+				     v-on:click="onSelectOrder(order, $event)"
 				>
 					<p>Order #{{order.id}}</p>
 					<p>From: {{order.fromText}}</p>
@@ -49,9 +49,8 @@
 			</select>
 			<button v-on:click="onFinishNewRoute()">Save Route</button>
 
-			<a href="#" class="fab">+</a>
+			<a href="#" class="fab"></a>
 		</nav>
-		<div class="fab"> + </div>
 	</div>
 	<div id="map-container">
 		<div id="my-map"></div>

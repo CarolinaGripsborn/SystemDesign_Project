@@ -108,6 +108,14 @@
     text-decoration: none;
 }
 
+.nav-open .fab:before {
+    content: "\2190";
+}
+
+.fab:before {
+    content: "+";
+}
+
 .fab:hover {
     box-shadow: 0 6px 14px 0 #0005;
     transform: scale(1.05);
