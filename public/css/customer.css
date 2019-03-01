@@ -16,19 +16,17 @@ body {
 
 
 #slogan {
-    margin-left: 5%;
     grid-column: 1;
     grid-row: 1;
     border-style: hidden;
-    border-width: 50%;
     border-radius: 48%;
     background-color: var(--secondary-light-color);
-    padding: 12%; 
-    margin-left: 30%;
+    padding: 10%; 
+    margin-left: 40%;
     margin-right: -12%;
-    margin-top: 15%;
-    margin-bottom: 8%;
-    font-size: 203%;
+    margin-top: 5%;
+    margin-bottom: 20%;
+    font-size: 183%;
     font-style: italic;
 }
 
@@ -43,7 +41,7 @@ body {
 #placeOrder {
     border-style: inset;
     border-width: 1.5vw;
-    margin: 8%;
+    margin: -3%; 
 }
 
 #orderTitle {
@@ -52,7 +50,7 @@ body {
 
 #orderButton {
     font-size: 2vw;
-    margin: 6%;
+    margin: 1%;
     padding-left: 5%;
     padding-right: 5%;
     border-radius: 50%;
@@ -69,17 +67,17 @@ body {
 /*For customer_order.hmtl*/
 
 #orderInfo {
-    margin: 7%;
     font-size: 200%;
 }
 
 #subTitle {
     font-size: 80%;
-    margin-bottom: 8%;
+    margin-bottom: 2%;
+    margin-top: -1.5%;
 }
 
 #checkoutButton {
-    margin-top: 5%;
+    margin-bottom: 2%;
     font-size: 80%;
     padding: 3%;
     border-radius: 50%;
@@ -95,22 +93,32 @@ body {
 
 /*For customer_checkout.html*/
 
+#grid {
+    display: grid;
+}
+
 #displayOrder {
-    font-size: 165%;
+    grid-row: 2;
+    grid-column: 1;
+    font-size: 130%;
     border-style: inset;
     border-width: 1.5vw;
-    margin: 8%;
+    margin: 5%;
+    margin-right: 3%;
 }
 
 #checkoutInfo {
+    grid-row: 2;
+    grid-column: 2;
     font-size: 165%;
     border-style: inset;
     border-width: 1.5vw;
-    margin: 8%;
+    margin: 5%;
+    margin-left: 3%;
 }
 
 #placeOrderButton {
-    margin-bottom: 10%;
+    margin-bottom: 3%;
     font-size: 170%;
     padding: 3%;
     border-radius: 50%;
@@ -122,15 +130,22 @@ body {
     cursor: progress;
 }
 
-#form {
-    margin-top: 2%;
-    margin-bottom: 5%;
-}
-
 #yourOrder {
-    margin-bottom: 10%;
+    font-size: 170%;
+    grid-row: 1;
+    grid-column: 1;
 }
 
+#checkout {
+    font-size: 160%;
+    grid-row: 1;
+    grid-column: 2;
+}
+
+#subTitle2 {
+    font-size: 80%;
+    margin: -2%;
+}
 
 
  
