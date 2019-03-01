@@ -36,7 +36,7 @@ var vm = new Vue({
       iconSize: [40,40],
       iconAnchor: [20,20]
     });
-  },
+  }/*,
   mounted: function () {
     // set up the map
     this.map = L.map('my-map').setView([59.8415,17.648], 13);
@@ -104,9 +104,44 @@ var vm = new Vue({
                                 latLong: [event.target.getLatLng().lat, event.target.getLatLng().lng]
                                 });
                                 
-    },
-      displayOrder: function() {
-          
     }
-  }
+    
+  }*/
 });
+
+
+function getOrderInfo(){
+    var pickupStreet = document.getElementById("street1").value; 
+    var pickupHouse = document.getElementById("house1").value;
+    var deliveryStreet = document.getElementById("street2").value;
+    var deliveryHouse = document.getElementById("house2").value;
+    var weight = document.getElementById("weight").value;
+    var deliveryMethod = document.getElementById("deliveryMethod").value;
+
+    var pickupAddr = pickupStreet + " " + pickupHouse;
+    var deliveryAddr = deliveryStreet + " " + deliveryHouse;
+    
+    var orderInfo = "?pickupaddr=" + pickupAddr + "&deliveryaddr=" + deliveryAddr + "&weight=" + weight + "&deliverymethod=" + deliveryMethod;
+    window.location.href = "http://localhost:3000/checkout" + orderInfo;
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var queryString = decodeURIComponent(window.location.search);
+    var queries = queryString.split("&");
+    var pickupAddr = queries[0].split("=");
+    var deliveryAddr = queries[1].split("=");
+    var weight = queries[2].split("=");
+    var deliveryMethod = queries[3].split("=");
+    
+    document.getElementById("displayPickup").innerHTML = pickupAddr[1];
+    document.getElementById("displayDelivery").innerHTML = deliveryAddr[1];
+    document.getElementById("displayWeight").innerHTML = weight[1] + "kg";
+    document.getElementById("displayMethod").innerHTML = deliveryMethod[1];
+}, false);
+
+
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
