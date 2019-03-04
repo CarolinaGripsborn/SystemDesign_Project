@@ -31,18 +31,27 @@ var vm = new Vue({
             this.baseMarker = L.marker(data.base, {icon: this.baseIcon}).addTo(this.map);
             this.baseMarker.bindPopup("This is the dispatch and routing center");
 
-            this.putBaseMapMarkers();
-
             var allRouteOrders = Object.values(this.routes).map(x => x.orders).flat();
 
             // Add some additional data to orders
-            for (var key in this.orders) {
-                var order = this.orders[key];
+            for (let key in this.orders) {
+                let order = this.orders[key];
 
                 order.id = parseInt(key);
                 order.isRouted = (allRouteOrders.includes(order.id));
                 order.selected = false;
             }
+
+            // Add some additional data to routes
+            for (let key in this.routes) {
+                let route = this.routes[key];
+
+                route.id = parseInt(key);
+                console.log(key);
+            }
+
+            this.putBaseMapMarkers();
+
 
         }.bind(this));
 
@@ -123,6 +132,10 @@ var vm = new Vue({
             } else {
                 nav.className = "nav-side";
             }
+        },
+
+        getRouteColor: function(routeID) {
+            return "HSLA(" + routeID*1239121234320942 % 360+ ", 100%, 33%, 1)";
         },
 
         getNextRouteNumber : function() {
@@ -249,22 +262,26 @@ var vm = new Vue({
         putRouteMarkers: function (route) {
             let len = route.orders.length;
 
+            const options = {color: this.getRouteColor(route.id)};
+            console.log(options);
+            console.log(JSON.stringify(route));
+
             for (let i = 1; i < len; i++) {
                 let start = this.orders[route.orders[i-1]];
                 let end = this.orders[route.orders[i]];
-                L.polyline([start.fromLatLong, end.fromLatLong]).addTo(this.map);
+                L.polyline([start.fromLatLong, end.fromLatLong], options).addTo(this.map);
             }
 
             // Put in the first line from driver
             let first = this.orders[route.orders[0]];
             let driver = this.drivers[route.driver];
 
-            L.polyline([driver.latLong, first.fromLatLong]).addTo(this.map);
+            L.polyline([driver.latLong, first.fromLatLong], options).addTo(this.map);
 
             //Put in the last line to base
             let last = this.orders[route.orders[route.orders.length - 1]];
 
-            L.polyline([last.fromLatLong, this.baseMarker.getLatLng()]).addTo(this.map);
+            L.polyline([last.fromLatLong, this.baseMarker.getLatLng(), ], options) .addTo(this.map);
 
 
             // Put in the order icons
