@@ -47,7 +47,6 @@ var vm = new Vue({
                 let route = this.routes[key];
 
                 route.id = parseInt(key);
-                console.log(key);
             }
 
             this.putBaseMapMarkers();
@@ -135,7 +134,7 @@ var vm = new Vue({
         },
 
         getRouteColor: function(routeID) {
-            return "HSLA(" + routeID*1239121234320942 % 360+ ", 100%, 33%, 1)";
+            return "HSLA(" + routeID*1239121234320942 % 360 + ", 100%, 33%, 1)";
         },
 
         getNextRouteNumber : function() {
@@ -263,8 +262,6 @@ var vm = new Vue({
             let len = route.orders.length;
 
             const options = {color: this.getRouteColor(route.id)};
-            console.log(options);
-            console.log(JSON.stringify(route));
 
             for (let i = 1; i < len; i++) {
                 let start = this.orders[route.orders[i-1]];
