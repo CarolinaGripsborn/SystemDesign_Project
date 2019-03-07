@@ -13,13 +13,12 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/leaflet/leaflet.js"></script>
 	<script src="js/dispatcher.js" defer></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 </head>
 <body>
 <header>
-	<ul>
-		<h1><a>The Handy Penguin</a></h1>
+	<ul id="title-bar">
+		<h1 id="title-content"><a>The Handy Penguin</a></h1>
 	</ul>
 </header>
 <div id="page">
@@ -29,10 +28,10 @@
 			<h3>{{route.driver}}</h3>
 			<p>Deliveries left: {{route.orders.length}}</p>
 		</div>
-		<nav class="nav-side">
-			<h2>New Route</h2>
+		<nav id="navig" class="nav-side">
+			<h2 id="nroute">New Route</h2>
 
-			<h3>Unassigned orders</h3>
+			<h3 id="uorders">Unassigned orders</h3>
 			<div id="order-scroller">
 				<div class="unassigned-order"
 				     v-for="order in orders"
@@ -44,7 +43,7 @@
 					<p>To: {{order.destText}}</p>
 				</div>
 			</div>
-			<p>Driver</p>
+			<p id="driver">Driver</p>
 			<div class="mdc-select">
 				<i class="mdc-select__dropdown-icon"></i>
 			<select  class="mdc-select__native-control" v-model="newRouteDriver" id="new-route-driver">
@@ -58,7 +57,7 @@
 			<br>
 			<button id="submit-new-route" class="mdc-button mdc-button--raised" v-on:click="onFinishNewRoute()">Assign Route</button>
 
-			<a href="#" class="fab"></a>
+			<div class="fab" v-on:click="assignNewOrders()"></div>
 		</nav>
 	</div>
 	<div id="map-container">

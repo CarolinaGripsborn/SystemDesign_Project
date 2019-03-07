@@ -59,7 +59,7 @@
 }
 
 #order-scroller {
-    height: 60%;
+    height: 51vh;
     overflow: auto;
 }
 
@@ -88,6 +88,10 @@
     margin: 5px;
 }
 
+#driver {
+    margin: 1.5vh 0 0.5vh;
+
+}
 
 .fab {
     width: 70px;
@@ -122,10 +126,31 @@
     cursor: pointer;
 }
 
+.nav-open .fab {
+
+    width: 1.25em;
+    height: 1.25em;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    box-shadow: 0 6px 10px 0 #0005;
+    transition: all 0.1s ease-in-out;
+
+    font-size: 50px;
+    color: white;
+    text-align: center;
+    line-height: 1.25em;
+
+    position: fixed;
+    left: 53%;
+    bottom: 50px;
+    text-decoration: none;
+
+}
+
 #submit-new-route {
     margin-top: 10px;
 }
 
 #new-route-driver {
-    width: 300px;
+    width: 9.5em;
 }

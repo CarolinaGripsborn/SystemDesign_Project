@@ -19,6 +19,7 @@ var vm = new Vue({
         newRouteLines: [],
         newRouteDriver: "",
         baseMarker: null,
+        isAssignOpen: false,
         newRouteOrders: []
     },
 
@@ -127,7 +128,7 @@ var vm = new Vue({
             this.isAssignOpen = !this.isAssignOpen;
             var nav = document.getElementById("navig");
             if (this.isAssignOpen) {
-                nav.className = "nav-open";
+                nav.className = "nav-side nav-open";
             } else {
                 nav.className = "nav-side";
             }
@@ -305,8 +306,3 @@ var vm = new Vue({
 });
 
 const select = new MDCSelect(document.querySelector('.mdc-select'));
-
-$('.nav-side .fab').on('click', function(e) {
-    e.preventDefault();
-    $(this).parent().toggleClass('nav-open');
-});
