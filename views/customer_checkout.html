@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  
+
   <head>
     <title>The Handy Penguin</title>
     <link rel="stylesheet" href="css/customer.css">
@@ -8,16 +8,16 @@
     <script src="/vue/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/leaflet/leaflet.js"></script>
-    <script src="/esri-leaflet/esri-leaflet.js"></script> 
+    <script src="/esri-leaflet/esri-leaflet.js"></script>
     <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
     <script src="js/customer.js" defer>
     </script>
-    
+
   </head>
 
   <body>
-    <a href="/" target="_blank">Open another customer view</a> | 
-    <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
+    <a href="/" target="_blank">Open another customer view</a> |
+    <a href="/dispatcher" target="_blank">Open dispatcher view</a> |
     <a href="/driver" target="_blank">Open driver view</a>
 
     <header>
@@ -25,7 +25,7 @@
         <h1><a>The Handy Penguin</a></h1>
       </ul>
     </header>
-   
+
     <section id = "grid">
       <div id = "yourOrder" align = "center">
         <h1>Your order</h1>
@@ -34,9 +34,9 @@
         <h1>Customer info</h1>
         <div id = "subTitle2"><u>Please fill out personal info below</u></div>
       </div>
-        
+
       <section id = "displayOrder" align = "center">
-      
+
         <h4 style="font-size:110%">Pick-up address</h4>
         <div id = "displayPickup"></div>
         <h4 style="font-size:110%">Delivery address</h4>
@@ -47,9 +47,12 @@
         <div id = "displayNotes"></div>
         <h4 style="font-size:110%">Delivery method</h4>
         <div id = "displayMethod"></div>
+        <h4 style="font-size:110%">Total Cost</h4>
+        <div id = "displayCost"></div>
+
       </section>
 
-      <section id = "checkoutInfo" align = "center"> 
+      <section id = "checkoutInfo" align = "center">
 
         <form id = "form">
           <p>
@@ -67,7 +70,7 @@
             <input type="text" id="street" name="st" required="required" placeholder="Street name"><br>
             <input type="number" id="house" name="nr" required="required" placeholder="House nr.">
           </p>
-          
+
           <label for="payment method">Payment method</label><br>
           <select id="paymentMethod" name="paym">
             <option>MasterCard</option>
@@ -83,8 +86,8 @@
     <form align="center">
       <button id="placeOrderButton">Place order!</button>
     </form>
-        
-    
+
+
   </body>
-  
+
 </html>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  
+
   <head>
     <title>The Handy Penguin</title>
     <link rel="stylesheet" href="css/customer.css">
@@ -8,16 +8,16 @@
     <script src="/vue/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/leaflet/leaflet.js"></script>
-    <script src="/esri-leaflet/esri-leaflet.js"></script> 
+    <script src="/esri-leaflet/esri-leaflet.js"></script>
     <script src="/esri-leaflet-geocoder/esri-leaflet-geocoder.js"></script>
-    <script src="js/customer.js" defer></script>    
+    <script src="js/customer.js" defer></script>
   </head>
 
   <body>
-    <a href="/" target="_blank">Open another customer view</a> | 
-    <a href="/dispatcher" target="_blank">Open dispatcher view</a> | 
+    <a href="/" target="_blank">Open another customer view</a> |
+    <a href="/dispatcher" target="_blank">Open dispatcher view</a> |
     <a href="/driver" target="_blank">Open driver view</a>
-    
+
     <header>
       <ul>
         <h1><a>The Handy Penguin</a></h1>
@@ -50,16 +50,15 @@
         <p>
           <label for="deliveryMethod">Delivery method</label><br>
           <select id="deliveryMethod" name="delivery">
-            <option>Standard</option>
-            <option>Express</option>
+            <option>Standard (3-5 days)</option>
+            <option>Express (1-2 days)</option>
           </select>
-      
-      
+          
           <div id = "test"></div>
           <button id="checkoutButton" onclick="getOrderInfo()">Proceed to checkout</button>
       </form>
     </section>
-    
+
   </body>
-  
+
 </html>
