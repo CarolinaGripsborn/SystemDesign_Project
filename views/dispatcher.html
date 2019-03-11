@@ -39,7 +39,7 @@
 				     v-if="order.isRouted == false"
 				     v-on:click="onSelectOrder(order, $event)"
 				>
-					<p>Order #{{order.id}}</p>
+					<p>Order #{{order.id}} <span v-if="order.express == true">Express</span></p>
 					<p>From: {{order.fromText}}</p>
 					<p>To: {{order.destText}}</p>
 				</div>
@@ -49,7 +49,7 @@
 				<i class="mdc-select__dropdown-icon"></i>
 			<select  class="mdc-select__native-control" v-model="newRouteDriver" id="new-route-driver">
 				<option v-for = "driver in drivers">
-					{{driver.driverId}}
+					{{driver.driverId + (driverIsBusy(driver.driverId) ? " (busy)" : "")}}
 				</option>
 			</select>
 				<label class="mdc-floating-label">Select a driver</label>

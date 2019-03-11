@@ -150,7 +150,7 @@ var vm = new Vue({
 
             // Add the route to routes
             const newID = this.getNextRouteNumber();
-            this.routes[newID] = {driver: this.newRouteDriver, orders: this.newRouteOrders };
+            this.routes[newID] = {driver: this.newRouteDriver, orders: this.newRouteOrders, id: newID };
 
             for (let marker in this.newRouteMarkers) {
                 this.newRouteMarkers[marker].remove();
@@ -161,8 +161,6 @@ var vm = new Vue({
 
             // Draw the new route
             this.putRouteMarkers(this.routes[newID]);
-
-            console.log(JSON.stringify(this.routes));
 
             // Make vue update
             this.$forceUpdate();
@@ -284,7 +282,7 @@ var vm = new Vue({
             // Put in the order icons
             for (let i=0; i < len; i++) {
                 let order = this.orders[route.orders[i]];
-                var destMarker = L.marker(order.fromLatLong).addTo(this.map);
+                let destMarker = L.marker(order.fromLatLong).addTo(this.map);
                 destMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
                 destMarker.orderId = order.orderId;
             }
@@ -300,6 +298,14 @@ var vm = new Vue({
         },
         assignDriver: function (order) {
             socket.emit("driverAssigned", order);
+        },
+        driverIsBusy: function (driverID) {
+            for (let key in this.routes) {
+                if (this.routes[key].driver === driverID) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 });

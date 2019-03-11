@@ -142,12 +142,21 @@ data.drivers["Mikael"] = {
 	}
 };
 
+data.orders[993] = {
+	"destText": "Bananhuset",
+	"fromText": "Gangstavägen 30",
+	"fromLatLong": [59.832, 17.42],
+	"destLatLong": [59.594, 17.562],
+	"express": true,
+	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
+};
+
 data.orders[994] = {
 	"destText": "Vänstersvängen",
 	"fromText": "Högertrafiken 20",
 	"fromLatLong": [59.840, 17.64],
 	"destLatLong": [59.640, 17.54],
-	"expressOrAlreadyProcessed": false,
+	"express": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -156,7 +165,7 @@ data.orders[995] = {
 	"fromText": "Briegatan 20",
 	"fromLatLong": [59.845, 17.546],
 	"destLatLong": [54.842, 17.643],
-	"expressOrAlreadyProcessed": false,
+	"express": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -174,7 +183,7 @@ data.orders[997] = {
 	"fromText": "Polkavägen 6",
 	"fromLatLong": [59.849, 17.65],
 	"destLatLong": [59.545, 17.42],
-	"expressOrAlreadyProcessed": false,
+	"express": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -192,7 +201,7 @@ data.orders[999] = {
 	"fromText": "Polkavägen 6",
 	"fromLatLong": [59.641, 17.446],
 	"destLatLong": [59.840, 17.56],
-	"expressOrAlreadyProcessed": true,
+	"express": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
