@@ -24,40 +24,16 @@
 		<h2>Current Route</h2>
 
     <div class = "route" v-for="route in currentRoute">
-      <h2>Order {{route.orderNr}}</h2>
-     
-      <div v-if="route.step == 0">
-          <h3><font color="green">Pick-up address</font></h3>
-          <p>{{route.pickup}}</p>
-      </div>
-      <div v-if="route.step == 1">
-          <h3><font color="green">Pick-up address</font></h3>
-          <p>{{route.pickup}}</p>
-      </div>
-      <div v-if="route.step == 2">
-          <h3><font>Pick-up address</font></h3>
-          <p>{{route.pickup}}</p>
-      </div>
+      <h2>Order #{{route.id}}</h2>
 
-      <div v-if="route.step == 0">
-          <h3><font color="green">Delivery address</font></h3>
-          <p>{{route.delivery}}</p>
-      </div>
-      <div v-if="route.step == 2">
-          <h3><font color="green">Delivery address</font></h3>
-          <p>{{route.delivery}}</p>
-      </div>
-      <div v-if="route.step == 1">
-          <h3><font>Delivery address</font></h3>
-          <p>{{route.delivery}}</p>
-      </div>
-      
+      <h3>Pick-up address</h3>
+      <p>{{route.fromText}}</p>
+      <h3>Delivery address</h3>
+      <p>{{route.destText}}</p>
       <h3>Package weight</h3>
-      <p>{{route.weight}}</p>
-      <h3>Delivery method</h3>
-      <p>{{route.method}}</p>
-      <h3>Notes</h3>
-      <p>{{route.note}}</p><br>
+      <p>{{route.orderDetails.totalGrams}}g</p>
+      <h3>Notes</h3> 
+      <p>{{route.orderDetails.driverInstructions}}</p><br>
       
       <div id = "buttons">
         <div v-if="route.step != 1">
@@ -74,11 +50,13 @@
 
 			<div id="order-scroller">
 
-        <div class="allOrders" v-for="route in allRoutes" v-on:click="updateCurrentRoute(route, $event)">
-          <p>Order {{route.orderNr}}</p>
-					<p>From: {{route.pickup}}</p>
-					<p>To: {{route.delivery}}</p>
-				</div>
+        <div v-for="route in routes" v-if="route.driver == 'Stefan'">
+          <div class="allOrders" v-for="order in route.orders" v-on:click="updateCurrentRoute(orders[order], $event)">
+            <p>Order #{{orders[order].id}}</p>
+					  <p>From: {{orders[order].fromText}}</p>
+					  <p>To: {{orders[order].destText}}</p>
+        </div>  
+        </div>
         
 			</div>
 			

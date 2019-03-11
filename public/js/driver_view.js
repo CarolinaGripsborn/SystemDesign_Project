@@ -25,7 +25,7 @@ var vm = new Vue({
     created: function () {
         
         socket.on('initialize', function (data) {
-
+            
             this.orders = data.orders;
             this.drivers = data.drivers;
             this.routes = data.routes;
@@ -33,22 +33,13 @@ var vm = new Vue({
             this.allRoutes = data.allRoutes;
             this.currentRoute = data.currentRoute;
 
-            //Hard coded orders
-            var route = {orderNr: "#233", pickup: "Street 1", delivery: "Street 2", weight: "10 kg", method: "Standard", note: "Fragile", step: 1};
-            
-            var route2 = {orderNr: "#234", pickup: "Imaginary Street 12", delivery: "Ekbyn 22", weight: "1 kg", method: "Express", note: "", step: 0};
-            
-            var route3 = {orderNr: "#235", pickup: "Gatan 23", delivery: "Whatever lane 45", weight: "5 kg", method: "Standard", note: "I hate you", step: 2};
-            
-            this.allRoutes = {route, route2, route3};
-            
             // add marker for home base in the map
             this.baseMarker = L.marker(data.base, {icon: this.baseIcon}).addTo(this.map);
             this.baseMarker.bindPopup("This is the dispatch and routing center");
 
             this.putBaseMapMarkers();
 
-            var allRouteOrders = Object.values(this.routes).map(x => x.orders).flat();
+            var allRouteOrders = Object.values(this.orders).map(x => x.orders).flat();
 
             // Add some additional data to orders
             for (var key in this.orders) {
@@ -229,13 +220,14 @@ var vm = new Vue({
 
         putBaseMapMarkers : function() {
             // add markers in the map for all routes
-            for (var route in this.routes) {
-                this.customerMarkers[route] = this.putRouteMarkers(this.routes[route]);
+            for (var route in this.routes){
+                var key = this.routes[route];
+                if(key.driver == "Stefan"){
+                    this.customerMarkers[route] = this.putRouteMarkers(this.routes[route]);
+                }   
             }
-            // add driver markers in the map for all drivers
-            for (var driverId in this.drivers) {
-                this.driverMarkers[driverId] = this.putDriverMarker(this.drivers[driverId]);
-            }
+            // add driver marker
+            this.driverMarkers["Stefan"] = this.putDriverMarker(this.drivers["Stefan"]);
         },
 
         getPolylinePoint: function(order) {
@@ -259,7 +251,6 @@ var vm = new Vue({
                 let end = this.orders[route.orders[i]];
                 L.polyline([start.fromLatLong, end.fromLatLong]).addTo(this.map);
             }
-
             // Put in the first line from driver
             let first = this.orders[route.orders[0]];
             let driver = this.drivers[route.driver];
