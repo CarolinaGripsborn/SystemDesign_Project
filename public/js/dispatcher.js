@@ -164,7 +164,7 @@ var vm = new Vue({
             }
 
             for (let i=0; i < this.newRouteOrders.length ; i++) {
-                let order = this.orders[this.newRouteOrders[i]];
+                let order = this.getOrder(this.newRouteOrders[i]);
                 order.isRouted = true;
 
             }
@@ -243,7 +243,7 @@ var vm = new Vue({
             if (order.deliverSelected) {
                 this.newRouteOrders.push(orderID);
 
-                const marker = L.marker(order.fromLatLong).addTo(this.map);
+                const marker = L.marker(this.getOrderPoint(orderID)).addTo(this.map);
 
                 this.newRoutePutLines[orderID] = marker;
             } else {
@@ -262,18 +262,19 @@ var vm = new Vue({
 
             //Remove old lines
             this.newRouteLines.map(x => x.remove());
+            this.newRouteLines = [];
 
             // Put the driver-first line
             if (this.newRouteOrders.length > 0 && this.newRouteDriver !== "") {
-                const end = this.orders[this.newRouteOrders[0]];
+                const end = this.newRouteOrders[0];
                 const driver = this.drivers[this.newRouteDriver];
-                this.newRouteLines.push(L.polyline([driver.latLong, end.fromLatLong], {color: 'green'}).addTo(this.map));
+                this.newRouteLines.push(L.polyline([driver.latLong, this.getOrderPoint(end)], {color: 'green'}).addTo(this.map));
             }
 
             for (let i = 1; i < this.newRouteOrders.length; i++) {
-                let start = this.orders[this.newRouteOrders[i-1]];
-                let end = this.orders[this.newRouteOrders[i]];
-                this.newRouteLines.push(L.polyline([start.fromLatLong, end.fromLatLong], {color: 'green'}).addTo(this.map));
+                let start = this.newRouteOrders[i-1];
+                let end = this.newRouteOrders[i];
+                this.newRouteLines.push(L.polyline([this.getOrderPoint(start), this.getOrderPoint(end)], {color: 'green'}).addTo(this.map));
             }
         },
 
