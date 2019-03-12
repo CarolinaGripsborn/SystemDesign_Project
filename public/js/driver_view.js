@@ -2,20 +2,14 @@
 /*global Vue, io */
 /* exported vm */
 'use strict';
-
-const MDCSelect = mdc.select.MDCSelect;
-
 var socket = io();
-
-const removeFromArray = function(array, value) {
-    // Removing from an array is so fun in javascript ._.
-    const index = this.newRouteOrders.indexOf(value);
-    array.splice(index, 1);
-};
 
 var vm = new Vue({
     el: '#drivers',
     data: {
+        allRoutes: {},
+        currentRoute: {},
+        selectedRoute: null,
         orders: {},
         drivers: {},
         routes: {},
@@ -27,40 +21,46 @@ var vm = new Vue({
         baseMarker: null,
         newRouteOrders: []
     },
-
+    
     created: function () {
+        
         socket.on('initialize', function (data) {
+
             this.orders = data.orders;
             this.drivers = data.drivers;
             this.routes = data.routes;
+            this.selectedOrder = data.selectedOrder;
+            this.allRoutes = data.allRoutes;
+            this.currentRoute = data.currentRoute;
+
+            //Hard coded orders
+            var route = {orderNr: "#233", pickup: "Street 1", delivery: "Street 2", weight: "10 kg", method: "Standard", note: "Fragile", step: 1};
+            
+            var route2 = {orderNr: "#234", pickup: "Imaginary Street 12", delivery: "Ekbyn 22", weight: "1 kg", method: "Express", note: "", step: 0};
+            
+            var route3 = {orderNr: "#235", pickup: "Gatan 23", delivery: "Whatever lane 45", weight: "5 kg", method: "Standard", note: "I hate you", step: 2};
+            
+            this.allRoutes = {route, route2, route3};
+            
             // add marker for home base in the map
             this.baseMarker = L.marker(data.base, {icon: this.baseIcon}).addTo(this.map);
             this.baseMarker.bindPopup("This is the dispatch and routing center");
 
+            this.putBaseMapMarkers();
+
             var allRouteOrders = Object.values(this.routes).map(x => x.orders).flat();
 
             // Add some additional data to orders
-            for (let key in this.orders) {
-                let order = this.orders[key];
+            for (var key in this.orders) {
+                var order = this.orders[key];
 
-                order.id = key;
+                order.id = parseInt(key);
                 order.isRouted = (allRouteOrders.includes(order.id));
                 order.selected = false;
-                order.deliverSelected = false;
             }
-
-            // Add some additional data to routes
-            for (let key in this.routes) {
-                let route = this.routes[key];
-
-                route.id = key;
-            }
-
-            this.putBaseMapMarkers();
-
 
         }.bind(this));
-
+/*
         socket.on('driverAdded', function (driver) {
             this.$set(this.drivers, driver.driverId, driver);
             this.driverMarkers[driver.driverId] = this.putDriverMarker(driver);
@@ -77,7 +77,7 @@ var vm = new Vue({
             this.map.removeLayer(this.driverMarkers[driverId]);
             Vue.delete(this.driverMarkers, driverId);
         }.bind(this));
-
+*/
         socket.on('orderPlaced', function (order) {
             this.$set(this.orders, order.orderId, order);
             this.customerMarkers[order.orderId] = this.putCustomerMarkers(order);
@@ -130,24 +130,10 @@ var vm = new Vue({
         }).addTo(this.map);
     },
     methods: {
-        assignNewOrders: function() {
-            this.isAssignOpen = !this.isAssignOpen;
-            var nav = document.getElementById("navig");
-            if (this.isAssignOpen) {
-                nav.className = "nav-open";
-            } else {
-                nav.className = "nav-side";
-            }
-        },
-
-        getRouteColor: function(routeID) {
-            return "HSLA(" + (parseInt(routeID) ^ 5241431) * 3456789098765 % 360 + ", 100%, 33%, 1)";
-        },
-
         getNextRouteNumber : function() {
             let max = 0;
             for (let route in this.routes) {
-                max = Math.max(max, parseInt(route));
+                max = Math.max(max, route);
             }
 
             return (max+1).toString();
@@ -157,24 +143,19 @@ var vm = new Vue({
 
             // Add the route to routes
             const newID = this.getNextRouteNumber();
-            this.routes[newID] = {driver: this.getSelectedDriver(), orders: this.newRouteOrders, id: newID };
+            this.routes[newID] = {driver: this.newRouteDriver, orders: this.newRouteOrders };
 
             for (let marker in this.newRouteMarkers) {
                 this.newRouteMarkers[marker].remove();
             }
-
-            for (let i=0; i < this.newRouteOrders.length ; i++) {
-                let order = this.getOrder(this.newRouteOrders[i]);
-                order.isRouted = true;
-
-            }
-
             this.newRouteMarkers = {};
             this.newRouteOrders = [];
             this.newRoutePutLines();
 
             // Draw the new route
             this.putRouteMarkers(this.routes[newID]);
+
+            console.log(JSON.stringify(this.routes));
 
             // Make vue update
             this.$forceUpdate();
@@ -183,7 +164,6 @@ var vm = new Vue({
             // TODO ALEX;
         },
 
-        
         onSelectOrder: function(order, eve) {
 
             let selectedOrderDom = eve.target.closest(".unassigned-order");
@@ -194,80 +174,32 @@ var vm = new Vue({
                 this.newRouteOrders.push(order.id);
 
                 // Add the marker
-                const marker = L.marker(this.getOrderPoint(order.id)).addTo(this.map);
+                const marker = L.marker(order.fromLatLong).addTo(this.map);
 
                 this.newRouteMarkers[order.id] = marker;
             } else {
                 // Removing from an array is so fun in javascript ._.
-                removeFromArray(this.newRouteOrders, order.id);
-
+                const index = this.newRouteOrders.indexOf(order.id);
+                this.newRouteOrders.splice(index, 1);
                 const icon = this.newRouteMarkers[order.id];
                 icon.remove();
                 delete this.newRouteMarkers[order.id];
             }
 
-            selectedOrderDom.style.backgroundColor = order.selected ? "#ddd" : "#fff";
-            this.newRoutePutLines();
-
-        },
-
-        onSelectOrderPickup: function(order, eve) {
-            let selectedOrderDom = eve.target.closest(".unassigned-order");
-            const orderID = order.id + "P";
-
-            order.selected = !order.selected;
-
-            if (order.selected) {
-                this.newRouteOrders.push(orderID);
-
-                const marker = L.marker(this.getOrderPoint(orderID)).addTo(this.map);
-
-                this.newRoutePutLines[orderID] = marker;
-            } else {
-                removeFromArray(this.newRouteOrders, orderID);
-
-                const icon = this.newRouteMarkers[orderID];
-                icon.remove;
-                delete this.newRouteMarkers[orderID];
-            }
+            console.log(this.newRouteOrders);
 
             selectedOrderDom.style.backgroundColor = order.selected ? "#ddd" : "#fff";
             this.newRoutePutLines();
-        },
 
-        onSelectOrderDeliver: function(order, eve) {
-            let selectedOrderDom = eve.target.closest(".unassigned-order");
-            const orderID = order.id + "D";
-
-            order.deliverSelected = !order.deliverSelected;
-
-            if (order.deliverSelected) {
-                this.newRouteOrders.push(orderID);
-
-                const marker = L.marker(this.getOrderPoint(orderID)).addTo(this.map);
-
-                this.newRoutePutLines[orderID] = marker;
-            } else {
-                removeFromArray(this.newRouteOrders, orderID);
-
-                const icon = this.newRouteMarkers[orderID];
-                icon.remove;
-                delete this.newRouteMarkers[orderID];
-            }
-
-            selectedOrderDom.style.backgroundColor = order.deliverSelected ? "#ddd" : "#fff";
-
-            this.newRoutePutLines();
         },
 
         newRoutePutLines: function() {
 
             //Remove old lines
             this.newRouteLines.map(x => x.remove());
-            this.newRouteLines = [];
 
             // Put the driver-first line
-            if (this.newRouteOrders.length > 0 && this.newRouteDriver !== "") {
+            if (this.newRouteOrders.length > 0 && this.newRouteDriver != "") {
                 const end = this.newRouteOrders[0];
                 const driver = this.drivers[this.newRouteDriver];
                 this.newRouteLines.push(L.polyline([driver.latLong, this.getOrderPoint(end)], {color: 'green'}).addTo(this.map));
@@ -306,25 +238,11 @@ var vm = new Vue({
             }
         },
 
-        getSelectedDriver: function() {
-            return this.newRouteDriver.replace(" (busy)", "");
-        },
-
-        getOrderPoint: function(orderID) {
-            let order = this.getOrder(orderID);
-            console.log(JSON.stringify(order));
-            if (order.express) {
-                if (orderID.substring(-1) == "P") {
-                    return order.fromLatLong;
-                } else {
-                    return order.destLatLong;
-                }
+        getPolylinePoint: function(order) {
+            if (order.expressOrAlreadyProcessed) {
+                return [order.fromLatLong, order.destLatLong];
             } else {
-                if (order.pickedUp) {
-                    return order.destLatLong;
-                } else {
-                    return order.fromLatLong;
-                }
+                return [order.fromLatLong, this.baseMarker.getLatLng(), order.destLatLong];
             }
         },
         putDriverMarker: function (driver) {
@@ -334,54 +252,73 @@ var vm = new Vue({
             return marker;
         },
         putRouteMarkers: function (route) {
-
-            const options = {color: this.getRouteColor(route.id)};
-
-            let lineArray = route.orders.map(x => this.getOrderPoint(x));
-            lineArray.unshift(this.drivers[route.driver].latLong);
-            lineArray.push(this.baseMarker.getLatLng());
-
-            let len = lineArray.length;
+            let len = route.orders.length;
 
             for (let i = 1; i < len; i++) {
-                let start = lineArray[i-1];
-                let end = lineArray[i];
-                L.polyline([start, end], options).addTo(this.map);
+                let start = this.orders[route.orders[i-1]];
+                let end = this.orders[route.orders[i]];
+                L.polyline([start.fromLatLong, end.fromLatLong]).addTo(this.map);
             }
+
+            // Put in the first line from driver
+            let first = this.orders[route.orders[0]];
+            let driver = this.drivers[route.driver];
+
+            L.polyline([driver.latLong, first.fromLatLong]).addTo(this.map);
+
+            //Put in the last line to base
+            let last = this.orders[route.orders[route.orders.length - 1]];
+
+            L.polyline([last.fromLatLong, this.baseMarker.getLatLng()]).addTo(this.map);
+
 
             // Put in the order icons
-            for (let i = 0; i < route.orders.length; i++) {
-                let orderID = route.orders[i];
-                let order = this.orders[this.convertOrderID(orderID)];
-
-                let destMarker = L.marker(this.getOrderPoint(orderID)).addTo(this.map);
-                destMarker.bindPopup(this.createPopup(order.id, order.orderDetails));
-                destMarker.orderId = order.id;
+            for (let i=0; i < len; i++) {
+                let order = this.orders[route.orders[i]];
+                var destMarker = L.marker(order.fromLatLong).addTo(this.map);
+                destMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
+                destMarker.orderId = order.orderId;
             }
 
+            /*var fromMarker = L.marker(order.fromLatLong, {icon: this.fromIcon}).addTo(this.map);
+            fromMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
+            fromMarker.orderId = order.orderId;
+            var destMarker = L.marker(order.destLatLong).addTo(this.map);
+            destMarker.bindPopup(this.createPopup(order.orderId, order.orderDetails));
+            destMarker.orderId = order.orderId;
+            var connectMarkers = L.polyline(this.getPolylinePoints(order), {color: 'blue'}).addTo(this.map);
+            return {from: fromMarker, dest: destMarker, line: connectMarkers};*/
         },
-        getOrder : function(orderID) {
-            return this.orders[this.convertOrderID(orderID)];
+        assignDriver: function (order) {
+            socket.emit("driverAssigned", order);
         },
-        convertOrderID: function(orderID) {
-            console.log("orderID: ", orderID);
-            // Removes all characters
-            return orderID.replace(/\D/g,'');
+        checked: function () {
+            document.getElementById("buttonImg1").src = "img/filled-checkmark-hi.png";
         },
-        driverIsBusy: function (driverID) {
-            for (let key in this.routes) {
-                if (this.routes[key].driver === driverID) {
-                    return true;
-                }
+        checked2: function () {
+            document.getElementById("buttonImg2").src = "img/filled-checkmark-hi.png";
+        },
+        updateCurrentRoute: function (order, eve) {
+            if(this.selectedRoute != null){
+                this.selectedRoute.style.backgroundColor = "#fff";
             }
-            return false;
+            
+            this.currentRoute = {order};
+            this.selectedRoute = eve.target.closest(".allOrders");
+  
+            order.selected = !order.selected;
+            this.selectedRoute.style.backgroundColor = "#ddd";
+
+            
         }
     }
 });
 
-const select = new MDCSelect(document.querySelector('.mdc-select'));
 
 $('.nav-side .fab').on('click', function(e) {
     e.preventDefault();
     $(this).parent().toggleClass('nav-open');
 });
+
+
+
