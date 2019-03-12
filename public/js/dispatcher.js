@@ -43,7 +43,7 @@ var vm = new Vue({
             for (let key in this.orders) {
                 let order = this.orders[key];
 
-                order.id = parseInt(key);
+                order.id = key;
                 order.isRouted = (allRouteOrders.includes(order.id));
                 order.selected = false;
                 order.deliverSelected = false;
@@ -53,7 +53,7 @@ var vm = new Vue({
             for (let key in this.routes) {
                 let route = this.routes[key];
 
-                route.id = parseInt(key);
+                route.id = key;
             }
 
             this.putBaseMapMarkers();
@@ -147,7 +147,7 @@ var vm = new Vue({
         getNextRouteNumber : function() {
             let max = 0;
             for (let route in this.routes) {
-                max = Math.max(max, route);
+                max = Math.max(max, route.id);
             }
 
             return (max+1).toString();
