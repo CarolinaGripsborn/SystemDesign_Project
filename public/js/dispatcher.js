@@ -9,7 +9,7 @@ var socket = io();
 
 const removeFromArray = function(array, value) {
     // Removing from an array is so fun in javascript ._.
-    const index = this.newRouteOrders.indexOf(value);
+    const index = array.indexOf(value);
     array.splice(index, 1);
 };
 
@@ -222,12 +222,12 @@ var vm = new Vue({
 
                 const marker = L.marker(this.getOrderPoint(orderID)).addTo(this.map);
 
-                this.newRoutePutLines[orderID] = marker;
+                this.newRouteMarkers[orderID] = marker;
             } else {
                 removeFromArray(this.newRouteOrders, orderID);
 
                 const icon = this.newRouteMarkers[orderID];
-                icon.remove;
+                icon.remove();
                 delete this.newRouteMarkers[orderID];
             }
 
@@ -246,12 +246,12 @@ var vm = new Vue({
 
                 const marker = L.marker(this.getOrderPoint(orderID)).addTo(this.map);
 
-                this.newRoutePutLines[orderID] = marker;
+                this.newRouteMarkers[orderID] = marker;
             } else {
                 removeFromArray(this.newRouteOrders, orderID);
 
                 const icon = this.newRouteMarkers[orderID];
-                icon.remove;
+                icon.remove();
                 delete this.newRouteMarkers[orderID];
             }
 
@@ -312,9 +312,8 @@ var vm = new Vue({
 
         getOrderPoint: function(orderID) {
             let order = this.getOrder(orderID);
-            console.log(JSON.stringify(order));
             if (order.express) {
-                if (orderID.substring(-1) == "P") {
+                if (orderID.substr(-1) == "P") {
                     return order.fromLatLong;
                 } else {
                     return order.destLatLong;
@@ -364,7 +363,6 @@ var vm = new Vue({
             return this.orders[this.convertOrderID(orderID)];
         },
         convertOrderID: function(orderID) {
-            console.log("orderID: ", orderID);
             // Removes all characters
             return orderID.replace(/\D/g,'');
         },
