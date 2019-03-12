@@ -92,7 +92,7 @@ var vm = new Vue({
         this.destMarker = L.marker([event.latlng.lat, event.latlng.lng], {draggable: true}).addTo(this.map);
         this.destMarker.on("drag", this.moveMarker);
         this.connectMarkers = L.polyline(this.getPolylinePoints(), {color: 'blue'}).addTo(this.map);
-      } 
+      }
       // subsequent clicks assume moved markers
       else {
         this.moveMarker();
@@ -103,25 +103,37 @@ var vm = new Vue({
       socket.emit("moveMarker", { orderId: event.target.orderId,
                                 latLong: [event.target.getLatLng().lat, event.target.getLatLng().lng]
                                 });
-                                
+
     }
-    
+
   }*/
 });
 
+function deliveryMethodCost(){
+  var delMethod = document.getElementById("deliveryMethod").value;
+  if (delMethod == "Express (1-2 days)"){
+    return 50;
+  }
+  else{
+    return 25;
+  }
+}
 
 function getOrderInfo(){
-    var pickupStreet = document.getElementById("street1").value; 
+    var pickupStreet = document.getElementById("street1").value;
     var pickupHouse = document.getElementById("house1").value;
     var deliveryStreet = document.getElementById("street2").value;
     var deliveryHouse = document.getElementById("house2").value;
     var weight = document.getElementById("weight").value;
+    var notes = document.getElementById("notes").value;
     var deliveryMethod = document.getElementById("deliveryMethod").value;
+    var deliveryCost = deliveryMethodCost() + 10*weight + " sek";
 
     var pickupAddr = pickupStreet + " " + pickupHouse;
     var deliveryAddr = deliveryStreet + " " + deliveryHouse;
+
+    var orderInfo = "?pickupaddr=" + pickupAddr + "&deliveryaddr=" + deliveryAddr + "&weight=" + weight + "&notes=" + notes + "&deliverymethod=" + deliveryMethod + "&deliveryCost=" + deliveryCost;
     
-    var orderInfo = "?pickupaddr=" + pickupAddr + "&deliveryaddr=" + deliveryAddr + "&weight=" + weight + "&deliverymethod=" + deliveryMethod;
     window.location.href = "http://localhost:3000/checkout" + orderInfo;
 }
 
@@ -132,12 +144,16 @@ document.addEventListener('DOMContentLoaded', function() {
     var pickupAddr = queries[0].split("=");
     var deliveryAddr = queries[1].split("=");
     var weight = queries[2].split("=");
-    var deliveryMethod = queries[3].split("=");
-    
+    var notes = queries[3].split("=");
+    var deliveryMethod = queries[4].split("=");
+    var deliveryCost = queries[5].split("=");
+
     document.getElementById("displayPickup").innerHTML = pickupAddr[1];
     document.getElementById("displayDelivery").innerHTML = deliveryAddr[1];
     document.getElementById("displayWeight").innerHTML = weight[1] + "kg";
+    document.getElementById("displayNotes").innerHTML = notes[1];
     document.getElementById("displayMethod").innerHTML = deliveryMethod[1];
+    document.getElementById("displayCost").innerHTML = deliveryCost[1];
 }, false);
 
 

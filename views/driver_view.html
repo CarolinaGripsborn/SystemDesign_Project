@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DELIVERY DISPATCHER</title>
+	<link rel="stylesheet" href="/leaflet/leaflet.css">
+	<link rel="stylesheet" href="css/shared.css">
+	<link rel="stylesheet" href="css/driver.css">
+	<script src="/vue/vue.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/leaflet/leaflet.js"></script>
+	<script src="js/driver_view.js" defer></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<header>
+	<ul>
+		<h1><a>The Handy Penguin</a></h1>
+	</ul>
+</header>
+<div id="page">
+	<div id="drivers">
+		<h2>Current Route</h2>
+
+    <div class = "route" v-for="route in currentRoute">
+      <h2>Order {{route.orderNr}}</h2>
+     
+      <div v-if="route.step == 0">
+          <h3><font color="green">Pick-up address</font></h3>
+          <p>{{route.pickup}}</p>
+      </div>
+      <div v-if="route.step == 1">
+          <h3><font color="green">Pick-up address</font></h3>
+          <p>{{route.pickup}}</p>
+      </div>
+      <div v-if="route.step == 2">
+          <h3><font>Pick-up address</font></h3>
+          <p>{{route.pickup}}</p>
+      </div>
+
+      <div v-if="route.step == 0">
+          <h3><font color="green">Delivery address</font></h3>
+          <p>{{route.delivery}}</p>
+      </div>
+      <div v-if="route.step == 2">
+          <h3><font color="green">Delivery address</font></h3>
+          <p>{{route.delivery}}</p>
+      </div>
+      <div v-if="route.step == 1">
+          <h3><font>Delivery address</font></h3>
+          <p>{{route.delivery}}</p>
+      </div>
+      
+      <h3>Package weight</h3>
+      <p>{{route.weight}}</p>
+      <h3>Delivery method</h3>
+      <p>{{route.method}}</p>
+      <h3>Notes</h3>
+      <p>{{route.note}}</p><br>
+      
+      <div id = "buttons">
+        <div v-if="route.step != 1">
+          <button id = "deliverButton" v-on:click="checked()"><p>DELIVER <img id="buttonImg1" src="img/blank-checkmark-hi.png" width="16%" align="right"></p></button>
+        </div> <br>
+        <div v-if="route.step != 2">
+          <button id = "pickupButton" v-on:click="checked2()"><p>PICK-UP <img id="buttonImg2" src="img/blank-checkmark-hi.png" width="18%" align="right"></p></button>
+        </div>
+      </div>
+    </div>
+    
+		<nav class="nav-side">
+			<h2>All Routes</h2>
+
+			<div id="order-scroller">
+
+        <div class="allOrders" v-for="route in allRoutes" v-on:click="updateCurrentRoute(route, $event)">
+          <p>Order {{route.orderNr}}</p>
+					<p>From: {{route.pickup}}</p>
+					<p>To: {{route.delivery}}</p>
+				</div>
+        
+			</div>
+			
+			<a href="#" class="fab">&#9776</a>
+		</nav>
+		<div class="fab">+</div>
+	</div>
+	<div id="map-container">
+		<div id="my-map"></div>
+	</div>
+</div>
+</body>
+</html>
