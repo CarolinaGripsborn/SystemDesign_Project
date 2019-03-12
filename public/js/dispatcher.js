@@ -7,6 +7,12 @@ const MDCSelect = mdc.select.MDCSelect;
 
 var socket = io();
 
+const removeFromArray = function(array, value) {
+    // Removing from an array is so fun in javascript ._.
+    const index = this.newRouteOrders.indexOf(value);
+    array.splice(index, 1);
+};
+
 var vm = new Vue({
     el: '#drivers',
     data: {
@@ -40,6 +46,7 @@ var vm = new Vue({
                 order.id = parseInt(key);
                 order.isRouted = (allRouteOrders.includes(order.id));
                 order.selected = false;
+                order.deliverSelected = false;
             }
 
             // Add some additional data to routes
@@ -176,8 +183,6 @@ var vm = new Vue({
             // TODO ALEX;
         },
 
-        
-
         onSelectOrder: function(order, eve) {
 
             let selectedOrderDom = eve.target.closest(".unassigned-order");
@@ -193,8 +198,8 @@ var vm = new Vue({
                 this.newRouteMarkers[order.id] = marker;
             } else {
                 // Removing from an array is so fun in javascript ._.
-                const index = this.newRouteOrders.indexOf(order.id);
-                this.newRouteOrders.splice(index, 1);
+                removeFromArray(this.newRouteOrders, order.id);
+
                 const icon = this.newRouteMarkers[order.id];
                 icon.remove();
                 delete this.newRouteMarkers[order.id];
@@ -205,12 +210,52 @@ var vm = new Vue({
 
         },
 
-        onSelectOrderDeliver: function(order, eve) {
+        onSelectOrderPickup: function(order, eve) {
+            let selectedOrderDom = eve.target.closest(".unassigned-order");
+            const orderID = order.id + "P";
 
+            order.selected = !order.selected;
+
+            if (order.selected) {
+                this.newRouteOrders.push(orderID);
+
+                const marker = L.marker(order.fromLatLong).addTo(this.map);
+
+                this.newRoutePutLines[orderID] = marker;
+            } else {
+                removeFromArray(this.newRouteOrders, orderID);
+
+                const icon = this.newRouteMarkers[orderID];
+                icon.remove;
+                delete this.newRouteMarkers[orderID];
+            }
+
+            selectedOrderDom.style.backgroundColor = order.selected ? "#ddd" : "#fff";
+            this.newRoutePutLines();
         },
 
-        onSelectOrderPickup: function(order, eve) {
+        onSelectOrderDeliver: function(order, eve) {
+            let selectedOrderDom = eve.target.closest(".unassigned-order");
+            const orderID = order.id + "D";
 
+            order.deliverSelected = !order.deliverSelected;
+
+            if (order.deliverSelected) {
+                this.newRouteOrders.push(orderID);
+
+                const marker = L.marker(order.fromLatLong).addTo(this.map);
+
+                this.newRoutePutLines[orderID] = marker;
+            } else {
+                removeFromArray(this.newRouteOrders, orderID);
+
+                const icon = this.newRouteMarkers[orderID];
+                icon.remove;
+                delete this.newRouteMarkers[orderID];
+            }
+
+            selectedOrderDom.style.backgroundColor = order.deliverSelected ? "#ddd" : "#fff";
+            this.newRoutePutLines();
         },
 
         newRoutePutLines: function() {
@@ -219,7 +264,7 @@ var vm = new Vue({
             this.newRouteLines.map(x => x.remove());
 
             // Put the driver-first line
-            if (this.newRouteOrders.length > 0 && this.newRouteDriver != "") {
+            if (this.newRouteOrders.length > 0 && this.newRouteDriver !== "") {
                 const end = this.orders[this.newRouteOrders[0]];
                 const driver = this.drivers[this.newRouteDriver];
                 this.newRouteLines.push(L.polyline([driver.latLong, end.fromLatLong], {color: 'green'}).addTo(this.map));
@@ -262,11 +307,21 @@ var vm = new Vue({
             return this.newRouteDriver.replace(" (busy)", "");
         },
 
-        getOrderPoint: function(order) {
-            if (order.pickedUp) {
-                return order.destLatLong;
+        getOrderPoint: function(orderID) {
+            let order = this.getOrder(orderID);
+
+            if (order.express) {
+                if (orderID.substring(-1) == "P") {
+                    return order.fromLatLong;
+                } else {
+                    return order.destLatLong;
+                }
             } else {
-                return order.fromLatLong;
+                if (order.pickedUp) {
+                    return order.destLatLong;
+                } else {
+                    return order.fromLatLong;
+                }
             }
         },
         putDriverMarker: function (driver) {
@@ -279,7 +334,7 @@ var vm = new Vue({
 
             const options = {color: this.getRouteColor(route.id)};
 
-            let lineArray = route.orders.map(x => this.getOrderPoint(this.orders[x]));
+            let lineArray = route.orders.map(x => this.getOrderPoint(x));
             lineArray.unshift(this.drivers[route.driver].latLong);
             lineArray.push(this.baseMarker.getLatLng());
 
@@ -293,13 +348,22 @@ var vm = new Vue({
 
             // Put in the order icons
             for (let i = 0; i < route.orders.length; i++) {
-                let order = this.orders[route.orders[i]];
+                let orderID = route.orders[i];
+                let order = this.orders[this.convertOrderID(orderID)];
 
-                let destMarker = L.marker(this.getOrderPoint(order)).addTo(this.map);
+                let destMarker = L.marker(this.getOrderPoint(orderID)).addTo(this.map);
                 destMarker.bindPopup(this.createPopup(order.id, order.orderDetails));
                 destMarker.orderId = order.id;
             }
 
+        },
+        getOrder : function(orderID) {
+            return this.orders[this.convertOrderID(orderID)];
+        },
+        convertOrderID: function(orderID) {
+            console.log("orderID: ", orderID);
+            // Removes all characters
+            return orderID.replace(/\D/g,'');
         },
         driverIsBusy: function (driverID) {
             for (let key in this.routes) {
