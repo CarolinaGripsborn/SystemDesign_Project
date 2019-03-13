@@ -18,17 +18,25 @@ var vm = new Vue({
   methods: {
       placeOrder: function() {
           var from = document.getElementById("displayPickup").innerHTML;
-          var dest = document.getElementById("displaydelivery").innerHTML;
+          var dest = document.getElementById("displayDelivery").innerHTML;
           var express = false;
-          if(document.getElementById("displaymethod").innerHTML == "express (1-2 days)"){
+          if (document.getElementById("displayMethod").innerHTML == "express (1-2 days)") {
               express = true;
           }
-          var weight = document.getElementById("displayweight").innerHTML;
-          var notes = document.getElementById("displaynotes").innerHTML;
-           
-          socket.emit("placeOrder", { fromText: order.from, destText: order.dest, express: order.express, pickedUp: false, delivered: false, orderDetails: { "weight": order.weight, "notes": order.notes}
-      });
-    }
+          var weight = document.getElementById("displayWeight").innerHTML;
+          var notes = document.getElementById("displayNotes").innerHTML;
+
+          console.log("Hej!");
+
+          socket.emit("placeOrder", {
+              fromText: from,
+              destText: dest,
+              express: express,
+              pickedUp: false,
+              delivered: false,
+              orderDetails: {"weight": weight, "notes": notes}
+          });
+      }
   }
 });
 
@@ -52,7 +60,7 @@ function getOrderInfo(){
     var deliveryMethod = document.getElementById("deliveryMethod").value;
     var deliveryCost = deliveryMethodCost() + 10*weight + " sek";
     var express = false;
-    if(deliveryMethod == "express (1-2 days)"){
+    if(deliveryMethod == "Express (1-2 days)"){
         express = true;
     }
 

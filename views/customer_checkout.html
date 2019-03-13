@@ -16,6 +16,7 @@
   </head>
 
   <body>
+    <div id="page">
     <a href="/" target="_blank">Open another customer view</a> |
     <a href="/dispatcher" target="_blank">Open dispatcher view</a> |
     <a href="/driver" target="_blank">Open driver view</a>
@@ -87,9 +88,9 @@
     <div id="displayThanks" align="center">
     </div>
     <div align="center">
-      <button id="placeOrderButton" onclick="displayThankYou()">Place order!</button>
+      <button id="placeOrderButton" v-on:click="placeOrder()" onclick="displayThankYou()">Place order!</button>
     </div>
-    
+    </div>
   </body>
 
 </html>

@@ -6,6 +6,7 @@
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
+var https = require('https');
 var io = require('socket.io')(http);
 var path = require('path');
 
@@ -23,6 +24,10 @@ app.use('/leaflet', express.static(path.join(__dirname, '/node_modules/leaflet/d
 app.use('/esri-leaflet', express.static(path.join(__dirname, '/node_modules/esri-leaflet/dist/')));
 // Serve esri leaflet geocoder from node_modules as esri-leaflet-geocoder/
 app.use('/esri-leaflet-geocoder', express.static(path.join(__dirname, '/node_modules/esri-leaflet-geocoder/dist/')));
+// Serve driver_view.html as /driverView
+app.get('/driver_view', function (req, res) {
+	res.sendFile(path.join(__dirname, 'views/driver_view.html'));
+});
 // Serve index.html directly as root page
 app.get('/', function (req, res) {
 	res.sendFile(path.join(__dirname, 'views/customer.html'));
@@ -37,17 +42,12 @@ app.get('/dispatcher', function (req, res) {
 });
 // Serve customer_order.html as /order
 app.get('/order', function (req, res) {
-  res.sendFile(path.join(__dirname, 'views/customer_order.html'));
+	res.sendFile(path.join(__dirname, 'views/customer_order.html'));
 });
 // Serve customer_checkout.html as /checkout
 app.get('/checkout', function (req, res) {
-  res.sendFile(path.join(__dirname, 'views/customer_checkout.html'));
+	res.sendFile(path.join(__dirname, 'views/customer_checkout.html'));
 });
-// Serve driver_view.html as /driverView
-app.get('/driver_view', function (req, res) {
-  res.sendFile(path.join(__dirname, 'views/driver_view.html'));
-});
-
 
 // Store data in an object to keep the global namespace clean and
 // prepare for multiple instances of data if necessary
@@ -60,11 +60,56 @@ function Data() {
 }
 
 
+Data.prototype.fetchJson = (address) => {
+	const options = {
+		hostname: "nominatim.openstreetmap.org",
+		path: encodeURI("/search?format=json&q=" + address),
+		headers: { "User-Agent" : "Handy Penguin"},
+		method: "GET",
+	};
+
+	return new Promise((resolve, reject) => {
+		https.get(options, (resp) => {
+			let data = '';
+
+			// A chunk of data has been recieved.
+			resp.on('data', (chunk) => {
+				data += chunk;
+			});
+
+			// The whole response has been received. Print out the result.
+			resp.on('end', () => {
+				resolve(data);
+			});
+		}).on("error", (err) => {
+			console.log("ERROR: " + err);
+			reject(err);
+		});
+	});
+};
+
 
 Data.prototype.getOrderNumber = function () {
 	this.currentOrderNumber += 1;
 	return this.currentOrderNumber;
-}
+};
+
+/*
+	Adds missing data to an order
+*/
+Data.prototype.processOrder = async function (order) {
+	const fromPromise = data.fetchJson(order.fromText);
+	const destPromise = data.fetchJson(order.destText);
+
+	const fromResponse = JSON.parse( await fromPromise );
+	const destResponse = JSON.parse( await destPromise );
+
+	order.destLatLong = [destResponse[0]["lat"], destResponse[0]["lon"]];
+	order.fromLatLong = [fromResponse[0]["lat"], fromResponse[0]["lon"]];
+
+	console.log("DEST LAT LONG" + order.destLatLong);
+	console.log("FROM LAT LONG" + order.fromLatLong);
+};
 
 /*
 	Adds an order to the queue
@@ -80,7 +125,7 @@ Data.prototype.addOrder = function (order) {
 	Delete the order when it's considered finished
 */
 Data.prototype.orderDropOff = function (orderId) {
-		delete this.orders[orderId];
+	delete this.orders[orderId];
 };
 
 /*
@@ -108,7 +153,7 @@ Data.prototype.updateDriverDetails = function (driver) {
 };
 
 Data.prototype.removeDriver = function (driverId) {
-		delete this.drivers[driverId];
+	delete this.drivers[driverId];
 };
 
 Data.prototype.getAllDrivers = function () {
@@ -154,7 +199,6 @@ data.orders[993] = {
 	"destLatLong": [59.594, 17.562],
 	"express": true,
 	"pickedUp": false,
-  "delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -164,8 +208,8 @@ data.orders[994] = {
 	"fromLatLong": [59.840, 17.64],
 	"destLatLong": [59.640, 17.54],
 	"express": false,
-  "pickedUp": false,
-  "delivered": false,
+	"pickedUp": false,
+	"delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -176,7 +220,7 @@ data.orders[995] = {
 	"destLatLong": [54.842, 17.643],
 	"express": false,
 	"pickedUp": false,
-  "delivered": false,
+	"delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -187,7 +231,7 @@ data.orders[996] = {
 	"destLatLong": [59.249, 17.345],
 	"express": false,
 	"pickedUp": false,
-  "delivered": false,  
+	"delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -198,7 +242,7 @@ data.orders[997] = {
 	"destLatLong": [59.545, 17.42],
 	"express": false,
 	"pickedUp": false,
-  "delivered": false,  
+	"delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -209,7 +253,7 @@ data.orders[998] = {
 	"destLatLong": [59.645, 17.645],
 	"express": false,
 	"pickedUp": false,
-  "delivered": false,  
+	"delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -220,7 +264,7 @@ data.orders[999] = {
 	"destLatLong": [59.840, 17.56],
 	"express": false,
 	"pickedUp": false,
-  "delivered": false,
+	"delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -243,13 +287,15 @@ io.on('connection', function (socket) {
 		routes: data.getAllRoutes(),
 		base: data.baseLatLong });
 	// Add a listener for when a connected client emits a "placeOrder" message
-	socket.on('placeOrder', function (order) {
+	socket.on('placeOrder', async function (order) {
+		await data.processOrder(order);
 		var orderId = data.addOrder(order);
 		order.orderId = orderId;
 		console.log("An order was placed:",order);
 		// send updated info to all connected clients, note the use of "io" instead of "socket"
 		io.emit('orderPlaced', order);
 		// send the orderId back to the customer who ordered
+		console.log(JSON.stringify(order));
 		socket.emit('orderId', orderId);
 	});
 
