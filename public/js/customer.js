@@ -133,7 +133,7 @@ function getOrderInfo(){
     var deliveryAddr = deliveryStreet + " " + deliveryHouse;
 
     var orderInfo = "?pickupaddr=" + pickupAddr + "&deliveryaddr=" + deliveryAddr + "&weight=" + weight + "&notes=" + notes + "&deliverymethod=" + deliveryMethod + "&deliveryCost=" + deliveryCost;
-    
+
     window.location.href = "http://localhost:3000/checkout" + orderInfo;
 }
 
@@ -160,4 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function myFunction() {
   var popup = document.getElementById("myPopup");
   popup.classList.toggle("show");
+}
+
+function displayThankYou(){
+  var thanks = "Thank you for your order! 😁" ;
+  document.getElementById("displayThanks").innerHTML= thanks;
 }

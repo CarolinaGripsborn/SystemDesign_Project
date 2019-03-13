@@ -8,7 +8,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
- 
+
 // Pick arbitrary port for server
 var port = 3000;
 app.set('port', (process.env.PORT || port));
@@ -44,7 +44,7 @@ app.get('/checkout', function (req, res) {
   res.sendFile(path.join(__dirname, 'views/customer_checkout.html'));
 });
 
-// Store data in an object to keep the global namespace clean and 
+// Store data in an object to keep the global namespace clean and
 // prepare for multiple instances of data if necessary
 function Data() {
 	this.orders = {};
@@ -79,7 +79,7 @@ Data.prototype.orderDropOff = function (orderId) {
 };
 
 /*
-	Only needs to know orderId. The rest is up to the client to decide 
+	Only needs to know orderId. The rest is up to the client to decide
 */
 Data.prototype.updateOrderDetails = function (order) {
 	for (var key in order) {
@@ -264,7 +264,7 @@ io.on('connection', function (socket) {
 		// send updated info to all connected clients, note the use of io instead of socket
 		io.emit('driverQuit', driver);
 	});
-	
+
 	socket.on('orderPickedUp', function(order) {
 		console.log("Order",order.orderId,"was picked up");
 		data.updateOrderDetails(order);
