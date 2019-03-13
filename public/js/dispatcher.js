@@ -30,6 +30,7 @@ var vm = new Vue({
 
     created: function () {
         socket.on('initialize', function (data) {
+            console.log("HERE: "+this.routes);
             this.orders = data.orders;
             this.drivers = data.drivers;
             this.routes = data.routes;
