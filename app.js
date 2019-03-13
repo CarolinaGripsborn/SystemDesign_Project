@@ -299,6 +299,13 @@ io.on('connection', function (socket) {
 		socket.emit('orderId', orderId);
 	});
 
+	socket.on('addRoute', async function(route) {
+		console.log("Route " + route.id + " was created");
+		data.createRoute(route);
+
+		io.emit('routeAdded', route.id);
+	});
+
 	socket.on('addDriver', function (driver) {
 		data.addDriver(driver);
 		console.log("Driver",driver,"is on the job");
@@ -341,12 +348,6 @@ io.on('connection', function (socket) {
 		// send updated info to all connected clients, note the use of io instead of socket
 		io.emit('orderDroppedOff', orderId);
 	});
-	socket.on('addRoute', function(route) {
-		console.log("Route", route.id,"was created")
-		data.createRoute(route);
-
-		io.emit('routeAdded', route.id);
-	})
 });
 
 var server = http.listen(app.get('port'), function () {

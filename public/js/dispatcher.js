@@ -30,7 +30,6 @@ var vm = new Vue({
 
     created: function () {
         socket.on('initialize', function (data) {
-            console.log("HERE: "+this.routes);
             this.orders = data.orders;
             this.drivers = data.drivers;
             this.routes = data.routes;
@@ -180,8 +179,7 @@ var vm = new Vue({
             // Make vue update
             this.$forceUpdate();
 
-            // Close the menu
-            // TODO ALEX;
+            socket.emit("addRoute", this.routes[newID]);
         },
 
         
