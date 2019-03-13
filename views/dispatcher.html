@@ -36,19 +36,25 @@
 			<div id="order-scroller">
 				<div v-for="order in orders"
 				     v-if="order.isRouted === false"
-				     v-on:click="onSelectOrder(order, $event)"
 				>
-					<div class="unassigned-order" v-if="order.express == false">
+					<div class="unassigned-order"
+					     v-if="order.express == false"
+					     v-on:click="onSelectOrder(order, $event)"
+				>
 						<p>Order #{{order.id}}</p>
 						<p>From: {{order.fromText}}</p>
 						<p>To: {{order.destText}}</p>
 					</div>
 					<div v-if="order.express">
-						<div class="unassigned-order">
+						<div class="unassigned-order"
+						     v-on:click="onSelectOrderPickup(order, $event)"
+						>
 							<p>Order #{{order.id}} Express Pickup</p>
 							<p>From: {{order.fromText}}</p>
 						</div>
-						<div class="unassigned-order">
+						<div class="unassigned-order"
+						     v-on:click="onSelectOrderDeliver(order, $event)"
+						>
 							<p>Order #{{order.id}} Express Delivery</p>
 							<p>To: {{order.destText}}</p>
 						</div>

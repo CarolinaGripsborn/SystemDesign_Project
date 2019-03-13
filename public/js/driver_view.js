@@ -1,3 +1,4 @@
+
 /*jslint es5:true, indent: 2 */
 /*global Vue, io */
 /* exported vm */
@@ -311,6 +312,7 @@ $('.nav-side .fab').on('click', function(e) {
     e.preventDefault();
     $(this).parent().toggleClass('nav-open');
 });
+
 
 
 
