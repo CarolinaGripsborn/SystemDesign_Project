@@ -35,14 +35,22 @@
       <h3>Notes</h3> 
       <p>{{route.orderDetails.driverInstructions}}</p><br>
       
-      <div id = "buttons">
-        <div v-if="route.step != 1">
-          <button id = "deliverButton" v-on:click="checked()"><p>DELIVER <img id="buttonImg1" src="img/blank-checkmark-hi.png" width="16%" align="right"></p></button>
-        </div> <br>
-        <div v-if="route.step != 2">
-          <button id = "pickupButton" v-on:click="checked2()"><p>PICK-UP <img id="buttonImg2" src="img/blank-checkmark-hi.png" width="18%" align="right"></p></button>
-        </div>
+      <div v-if="route.pickedUp == false">
+        <button id = "pickupButton" v-on:click="checkedPickup(route)"><p>PICK-UP <img id="buttonImg1" src="img/blank-checkmark-hi.png" width="16%" align="right"></p></button>
       </div>
+
+      <div v-if="route.pickedUp == true">
+        <button id = "pickupButton" v-on:click="checkedPickup(route)"><p>PICK-UP <img id="buttonImg1" src="img/filled-checkmark-hi.png" width="16%" align="right"></p></button>
+      </div>
+      <br>
+      <div v-if="route.delivered == false">
+        <button id = "deliverButton" v-on:click="checkedDeliver(route)"><p>DELIVER <img id="buttonImg2" src="img/blank-checkmark-hi.png" width="18%" align="right"></p></button>
+      </div>
+      
+      <div v-if="route.delivered == true">
+        <button id = "deliverButton" v-on:click="checkedDeliver(route)"><p>DELIVER <img id="buttonImg2" src="img/filled-checkmark-hi.png" width="18%" align="right"></p></button>
+      </div>
+      
     </div>
     
 		<nav class="nav-side">
@@ -55,7 +63,7 @@
             <p>Order #{{orders[order].id}}</p>
 					  <p>From: {{orders[order].fromText}}</p>
 					  <p>To: {{orders[order].destText}}</p>
-        </div>  
+          </div>  
         </div>
         
 			</div>

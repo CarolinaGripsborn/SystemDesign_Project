@@ -40,7 +40,7 @@
           <input type="number" id="house2" name="nr2" required="required" placeholder="House nr.">
         </p>
         <p>
-          <label for="weight">Package weight</label><br>
+          <label for="weight">Package weight (kg)</label><br>
           <input type="number" id="weight" name="pw" required="required" placeholder="Total weight (kg)">
         </p>
         <p>
@@ -54,9 +54,11 @@
             <option>Express (1-2 days)</option>
           </select>
           
-          <div id = "test"></div>
-          <button id="checkoutButton" onclick="getOrderInfo()">Proceed to checkout</button>
       </form>
+      
+      <div>
+        <button id="checkoutButton" onclick="getOrderInfo()">Proceed to checkout</button>
+      </div>
     </section>
 
   </body>

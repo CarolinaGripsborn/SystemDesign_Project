@@ -43,6 +43,11 @@ app.get('/order', function (req, res) {
 app.get('/checkout', function (req, res) {
   res.sendFile(path.join(__dirname, 'views/customer_checkout.html'));
 });
+// Serve driver_view.html as /driverView
+app.get('/driver_view', function (req, res) {
+  res.sendFile(path.join(__dirname, 'views/driver_view.html'));
+});
+
 
 // Store data in an object to keep the global namespace clean and 
 // prepare for multiple instances of data if necessary
@@ -149,6 +154,7 @@ data.orders[993] = {
 	"destLatLong": [59.594, 17.562],
 	"express": true,
 	"pickedUp": false,
+  "delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -158,6 +164,8 @@ data.orders[994] = {
 	"fromLatLong": [59.840, 17.64],
 	"destLatLong": [59.640, 17.54],
 	"express": false,
+  "pickedUp": false,
+  "delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -168,6 +176,7 @@ data.orders[995] = {
 	"destLatLong": [54.842, 17.643],
 	"express": false,
 	"pickedUp": false,
+  "delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -178,6 +187,7 @@ data.orders[996] = {
 	"destLatLong": [59.249, 17.345],
 	"express": false,
 	"pickedUp": false,
+  "delivered": false,  
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -188,6 +198,7 @@ data.orders[997] = {
 	"destLatLong": [59.545, 17.42],
 	"express": false,
 	"pickedUp": false,
+  "delivered": false,  
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -198,6 +209,7 @@ data.orders[998] = {
 	"destLatLong": [59.645, 17.645],
 	"express": false,
 	"pickedUp": false,
+  "delivered": false,  
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 
@@ -208,6 +220,7 @@ data.orders[999] = {
 	"destLatLong": [59.840, 17.56],
 	"express": false,
 	"pickedUp": false,
+  "delivered": false,
 	"orderDetails": { "pieces": 1, "spaceRequired": 3, "totalGrams": 5600, "driverInstructions": "Beware of the dog"}
 };
 

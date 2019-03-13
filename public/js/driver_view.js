@@ -283,24 +283,25 @@ var vm = new Vue({
         assignDriver: function (order) {
             socket.emit("driverAssigned", order);
         },
-        checked: function () {
-            document.getElementById("buttonImg1").src = "img/filled-checkmark-hi.png";
+        checkedPickup: function (route) {
+            route.pickedUp = true;
+        
         },
-        checked2: function () {
-            document.getElementById("buttonImg2").src = "img/filled-checkmark-hi.png";
+        checkedDeliver: function (route) {
+            if(route.pickedUp == true){
+                route.delivered = true;
+            }
         },
-        updateCurrentRoute: function (order, eve) {
+        updateCurrentRoute: function (order, event) {
             if(this.selectedRoute != null){
                 this.selectedRoute.style.backgroundColor = "#fff";
             }
             
             this.currentRoute = {order};
-            this.selectedRoute = eve.target.closest(".allOrders");
+            this.selectedRoute = event.target.closest(".allOrders");
   
             order.selected = !order.selected;
             this.selectedRoute.style.backgroundColor = "#ddd";
-
-            
         }
     }
 });

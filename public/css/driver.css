@@ -112,9 +112,6 @@
     cursor: pointer;
 }
 
-#buttons {
-    display: grid;
-}
 
 #deliverButton {
     grid-column: 1;
