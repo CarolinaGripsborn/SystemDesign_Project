@@ -295,6 +295,7 @@ io.on('connection', function (socket) {
 		// send updated info to all connected clients, note the use of "io" instead of "socket"
 		io.emit('orderPlaced', order);
 		// send the orderId back to the customer who ordered
+		console.log(JSON.stringify(order));
 		socket.emit('orderId', orderId);
 	});
 
@@ -351,5 +352,3 @@ io.on('connection', function (socket) {
 var server = http.listen(app.get('port'), function () {
 	console.log('Server listening on port ' + app.get('port'));
 });
-
-data.processOrder({fromText: "Salixvägen 5 Uppsala", destText: "Drottninggatan 5 Uppsala"});
