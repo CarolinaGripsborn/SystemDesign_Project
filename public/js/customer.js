@@ -88,3 +88,8 @@ function myFunction() {
   var popup = document.getElementById("myPopup");
   popup.classList.toggle("show");
 }
+
+function displayThankYou(){
+  var thanks = "Thank you for your order! 😁" ;
+  document.getElementById("displayThanks").innerHTML= thanks;
+}
